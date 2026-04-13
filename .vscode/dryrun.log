@@ -1,0 +1,7 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/krepo/GITHUB/rank5/ft_irc'
+make: Leaving directory '/home/krepo/GITHUB/rank5/ft_irc'
+ 
+make: *** No rule to make target 'obj/main.o', needed by 'PmergeMe'.
+make: *** No rule to make target 'obj/PmergeMe.o', needed by 'PmergeMe'.
+

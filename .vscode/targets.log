@@ -1,0 +1,442 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'obj/main.o', needed by 'PmergeMe'.  Stop.
+
+# GNU Make 4.4.1
+# Built for x86_64-unknown-linux-gnu
+# Copyright (C) 1988-2023 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Mon Apr 13 14:14:13 2026
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+SSH_AGENT_LAUNCHER = gnome-keyring
+# environment
+PULSE_SERVER = unix:/run/flatpak/pulse/native
+# environment
+SBX_CHROME_API_RQ = 1
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
+# environment
+VSCODE_CWD = /home/krepo/GITHUB/rank5/ft_irc
+# environment
+LIBVIRT_DEFAULT_URI = qemu:///system
+# environment
+GDM_LANG = en
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# environment
+GOPATH = /home/krepo/go
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# makefile (from 'Makefile', line 7)
+OBJ_DIR = obj/
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/krepo/GITHUB/rank5/ft_irc
+# environment
+ZYPAK_ZYGOTE_STRATEGY_SPAWN = 1
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+GI_TYPELIB_PATH = /app/lib/girepository-1.0
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+MAIL = krepo@student.hive.fi
+# environment
+XDG_DATA_DIRS = /app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share
+# environment
+OLDPWD = /home/krepo/GITHUB/rank5
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/krepo/.var/app/com.visualstudio.code/config/Code/CachedData/cfbea10c5ffb233ea9177d34726e6056e89913dc
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session50
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/flatpak/Xauthority
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS := /usr/include
+# environment
+GNOME_TERMINAL_SERVICE = :1.83
+# environment
+ALSA_CONFIG_DIR = /usr/share/alsa
+# makefile
+MAKEFLAGS = pqrR
+# makefile
+CURDIR := /home/krepo/GITHUB/rank5/ft_irc
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# makefile (from 'Makefile', line 9)
+SRCS = main.cpp PmergeMe.cpp 
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = 
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+ZYPAK_LIB = /app/bin/../lib
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/flatpak/ssh-auth
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_CONFIG_DIRS = /app/etc/xdg:/etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+ALSA_CONFIG_PATH = /usr/share/alsa/alsa-flatpak.conf
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# environment
+FLATPAK_SANDBOX_DIR = /home/krepo/.var/app/com.visualstudio.code/sandbox
+# automatic
+@F = $(notdir $@)
+# environment
+ZSH = /home/krepo/.oh-my-zsh
+# environment
+VSCODE_PID = 22
+# environment
+KRB5CCNAME = FILE:/tmp/krb5cc_6398_pHnzBy
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+PYTHONUSERBASE = /var/data/python
+# environment
+AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
+# environment
+XDG_DATA_HOME = /home/krepo/.var/app/com.visualstudio.code/data
+# environment
+SESSION_MANAGER = local/c1r6p13.hive.fi:@/tmp/.ICE-unix/1904529,unix/c1r6p13.hive.fi:/tmp/.ICE-unix/1904529
+# automatic
+*F = $(notdir $*)
+# environment
+CHROME_DESKTOP = code.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/flatpak/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"userLocale":"en-us","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/app/extra/vscode/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}
+# environment
+__EGL_EXTERNAL_PLATFORM_CONFIG_DIRS = /etc/egl/egl_external_platform.d:/usr/lib/x86_64-linux-gnu/GL/egl/egl_external_platform.d:/usr/share/egl/egl_external_platform.d
+# default
+MAKE_HOST := x86_64-unknown-linux-gnu
+# makefile (from 'Makefile', line 11)
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=ibus
+# environment
+LD_LIBRARY_PATH = /app/lib
+# environment
+SANDBOX_LD_LIBRARY_PATH = /app/lib
+# environment
+SHLVL = 1
+# environment
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/1090de6b_2386_4c5e_a2ef_3b875e08ad39
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /app/bin:/app/bin:/app/bin:/usr/bin:/home/krepo/.var/app/com.visualstudio.code/data/node_modules/bin
+# environment
+XCURSOR_PATH = /run/host/user-share/icons:/run/host/share/icons
+# default
+MAKEFILES := 
+# environment
+LANGUAGE = en
+# automatic
+^F = $(notdir $^)
+# environment
+DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
+# makefile (from 'Makefile', line 16)
+YELLOW = \033[0;33m
+# environment
+XDG_CONFIG_HOME = /home/krepo/.var/app/com.visualstudio.code/config
+# makefile (from 'Makefile', line 15)
+GREEN = \033[0;32m
+# environment
+DOCKER_HOST = unix:///run/user/6398/docker.sock
+ 
+# automatic
+?F = $(notdir $?)
+# makefile (from 'Makefile', line 1)
+NAME = PmergeMe
+# environment
+GTK_IM_MODULE = ibus
+# environment
+MACADDRESS = 38:f9:d3:73:62:38
+# environment
+XDG_CURRENT_DESKTOP = ubuntu:GNOME
+# environment
+LS_COLORS = no=00:fi=00:di=01;34:ln=00;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=41;33;01:ex=00;32:*.cmd=00;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.deb=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.lzma=00;31:*.zip=00;31:*.zoo=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tb2=00;31:*.tz2=00;31:*.tbz2=00;31:*.avi=01;35:*.bmp=01;35:*.fli=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mng=01;35:*.mov=01;35:*.mpg=01;35:*.pcx=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.ppm=01;35:*.tga=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.dl=01;35:*.gl=01;35:*.wmv=01;35:*.aiff=00;32:*.au=00;32:*.mid=00;32:*.mp3=00;32:*.ogg=00;32:*.voc=00;32:*.wav=00;32:
+# automatic
++F = $(notdir $+)
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+LESS = -R
+# environment
+DESKTOP_SESSION = ubuntu
+# environment
+GST_PLUGIN_SYSTEM_PATH = /app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/codecs-extra/lib/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = krepo
+# environment
+container = flatpak
+# makefile
+.DEFAULT_GOAL := all
+# environment
+SYSTEMD_EXEC_PID = 1904556
+# makefile (from 'Makefile', line 5)
+RM = rm -rf
+# environment
+EDITOR = nvim
+# environment
+NPM_CONFIG_GLOBALCONFIG = /app/etc/npmrc
+# environment
+GTK_MODULES = gail:atk-bridge
+# environment
+USER = krepo
+# environment
+DISPLAY = :99.0
+# default
+MAKE_VERSION := 4.4.1
+# environment
+PAGER = less
+# environment
+BAT_THEME = Monokai Pro
+# environment
+_ = /usr/bin/make
+# makefile (from 'Makefile', line 17)
+RESET = \033[0m
+# environment
+XDG_RUNTIME_DIR = /run/user/6398
+# environment
+GPG_AGENT_INFO = /run/user/6398/gnupg/S.gpg-agent:0:1
+# environment
+COLORTERM = truecolor
+# environment
+PULSE_CLIENTCONFIG = /run/flatpak/pulse/config
+# environment
+FC_FONTATIONS = 1
+# environment
+VISUAL = nvim
+# environment
+XDG_SESSION_CLASS = user
+# environment
+HOME = /home/krepo
+# environment
+QT_IM_MODULE = ibus
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/6398/vscode-5930808f-1.11-main.sock
+# environment
+TERM = xterm-256color
+# environment
+FT_HOOK_PATHNAME = login-user.d
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# makefile (from 'Makefile', line 13)
+DEPS = $(OBJS:.o=.d)
+# default
+SUFFIXES := 
+# environment
+XDG_CACHE_HOME = /home/krepo/.var/app/com.visualstudio.code/cache
+# environment
+VSCODE_CLI = 1
+# environment
+FT_HOOK_NAME = login-user
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+VTE_VERSION = 6800
+# makefile (from 'Makefile', line 4)
+CXXFLAGS = -Wall -Wextra -Werror -std=c++20
+# environment
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/krepo
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs notintermediate shell-export archives jobserver jobserver-fifo output-sync check-symlink load
+# makefile (from 'Makefile', line 3)
+CXX = c++
+# environment
+FLATPAK_ID = com.visualstudio.code
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+VSCODE_ESM_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+ZYPAK_BIN = /app/bin
+# environment
+GDMSESSION = ubuntu
+# variable set hash-table stats:
+# Load=146/1024=14%, Rehash=0, Collisions=30/186=16%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 2064, inode 29413785): 5 files, 2 impossibilities.
+
+# 5 files, 2 impossibilities in 1 directories.
+
+# Implicit Rules
+
+obj/%.o: %.cpp
+#  recipe to execute (from 'Makefile', line 26):
+		@mkdir -p $(dir $@)
+		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+		@echo "$(YELLOW)Compiling: $<$(RESET)"
+
+# 1 implicit rules, 0 (0.0%) terminal.
+# Files
+
+# Not a target:
+obj/main.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+obj/main.o:
+#  Implicit rule search has been done.
+#  File is an intermediate prerequisite.
+#  File is secondary (prerequisite of .SECONDARY).
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  File is secondary (prerequisite of .SECONDARY).
+#  Last modified 2026-04-09 13:31:32.233493
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+obj/PmergeMe.o:
+#  Implicit rule search has been done.
+#  File is an intermediate prerequisite.
+#  File is secondary (prerequisite of .SECONDARY).
+#  File does not exist.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 35):
+		$(RM) $(OBJ_DIR)
+		@echo "Objects removed."
+
+PmergeMe: obj/main.o obj/PmergeMe.o
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 22):
+		$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+		@echo "$(GREEN)Success: $(NAME) built.$(RESET)"
+
+re: fclean all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: PmergeMe
+#  Phony target (prerequisite of .PHONY).
+#  Command line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+fclean: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 39):
+		$(RM) $(NAME)
+		@echo "Executable removed."
+
+.SECONDARY: obj/main.o obj/PmergeMe.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: all clean fclean re
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+ 
+
+# Not a target:
+obj/PmergeMe.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# files hash-table stats:
+# Load=14/1024=1%, Rehash=0, Collisions=0/45=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 23 / storage = 194 B / avg = 8 B
+# current buf: size = 8162 B / used = 194 B / count = 23 / avg = 8 B
+
+# strcache performance: lookups = 50 / hit rate = 54%
+# hash-table stats:
+# Load=23/8192=0%, Rehash=0, Collisions=0/50=0%
+# Finished Make data base on Mon Apr 13 14:14:13 2026
+
+ 
