@@ -3,8 +3,11 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <sys/socket.h>
+
 
 #define PORT 4241
+#define BUFFER_SIZE 1024
 
 class Server
 {
