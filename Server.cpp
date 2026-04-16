@@ -62,8 +62,12 @@ void Server::runServer()
 						{
 							std::string mess = client->getRecvBuffer.substr(0, pos);
 							client->getRecvBuffer.erase(0, pos + 2); //remove everything up to and including the \r\n
-
+							processMessage(client, mess);
 						}
+						//TODO after processMessage puts something into the send buffer: 
+						// -check for if the buffer isn't empty 
+						//- register epoll_event, watch for EPOLLIN and EPOLLOUT
+						//- epoll_ctl() EPOLL_CTL_MOD
 					}	
 				}
 				if (events[i].events & EPOLLOUT) // have something to send to client, go write it
@@ -81,4 +85,5 @@ void Server::processMessage(Client* client. const std::string& message)
 	std::cout << "received: " << message << std::endl;
 
 	//FOR NOW JUST TO SEE WHAT IS THE MESSAGE RECEIVED, LATER USED TO PARSE AND HANDLE COMMANDS
+	// PUTTING INTO THE SEND CLIENT BUFFER 
 }
