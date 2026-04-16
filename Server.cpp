@@ -16,8 +16,13 @@ void Server::runServer()
 		std::cerr << "bind failed" << std::endl;
 		return;
 	}
-	listen(_serverfd, 10); // Listening (backlog = 10 pending connections)
+	if ((listen(_serverfd, 10)) < 0) // Listening (backlog = 10 pending connections)
+	{
+		std::cerr << "listen failed" << std::endl;
+		return;
+	} 
 	std::cout << "Listening on PORT: " << PORT << std::endl;
+	int epoll_fd = epoll_create1(EPOLL_CLOEXEC);
 	while (1)
 	{
 		_clientfd = accept(_serverfd, NULL, NULL); // accept blocks here until a client connects

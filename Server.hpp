@@ -5,6 +5,7 @@
 #include <map>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/epoll.h>
 #include "Client.hpp"
 
 
