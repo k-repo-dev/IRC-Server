@@ -8,7 +8,7 @@ void Server::runServer()
 		return;
 	}
 	struct sockaddr_in address;
-	std::memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
+	memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
 	address.sin_family = AF_INET; // set type (IPv4)
 	address.sin_addr.s_addr = INADDR_ANY; //accept connections from any IP on this machine
 	address.sin_port = htons(PORT); // makes sure the port number is understood correctly outside our computer
@@ -37,7 +37,7 @@ void Server::runServer()
 			int currentfd = events[i].data.fd;
 			if (currentfd == _serverfd)
 			{
-				_clientfd = accept(_serverfd, NULL, NULL) // CHECK IF FAIL / accept blocks here until a client connects
+				_clientfd = accept(_serverfd, NULL, NULL); // CHECK IF FAIL / accept blocks here until a client connects
 				Client* client = new Client(_clientfd);
 				_clientList[_clientfd] = client;
 				struct epoll_event client_ev;
@@ -54,14 +54,14 @@ void Server::runServer()
 					int bytes = recv(currentfd, buffer, sizeof(buffer),0);
 					if (bytes > 0) // there's some data to read
 					{
-						Client* client = _clientList(currentfd);
+						Client* client = _clientList[currentfd]; //client connected to its file descriptor
 						client->getRecvBuffer().append(buffer, bytes); // put it in the buffer of that specific client
 
 						size_t pos = client->getRecvBuffer().find("\r\n");
 						while (pos != std::string::npos) //extract full message
 						{
-							std::string mess = client->getRecvBuffer.substr(0, pos);
-							client->getRecvBuffer.erase(0, pos + 2); //remove everything up to and including the \r\n
+							std::string mess = client->getRecvBuffer().substr(0, pos);
+							client->getRecvBuffer().erase(0, pos + 2); //remove everything up to and including the \r\n
 							processMessage(client, mess);
 						}
 						//TODO after processMessage puts something into the send buffer: 
@@ -79,7 +79,7 @@ void Server::runServer()
 	}
 }
 
-void Server::processMessage(Client* client. const std::string& message)
+void Server::processMessage(Client* client, const std::string& message)
 {
 	(void)client;
 	std::cout << "received: " << message << std::endl;
