@@ -62,7 +62,7 @@ void Server::runServer()
 						{
 							std::string mess = client->getRecvBuffer.substr(0, pos);
 							client->getRecvBuffer.erase(0, pos + 2); //remove everything up to and including the \r\n
-							
+
 						}
 					}	
 				}
@@ -72,21 +72,13 @@ void Server::runServer()
 				}
 			}
 		}
-
-
-
-		
-	
-
-		//int n = read(_clientfd, _buffer, BUFFER_SIZE -1); // reading what the client sent
-		//buffer[n] = '\0';
-		//std::cout << "Received: " << _buffer << "\n";
-
-		//char *resp = "Hello from server!\n"; // temporary respons to client
-		//write(_clientfd, resp, std::strlen(resp));
-
-		//close(_clientfd); // Done with this client
 	}
+}
 
-	//close(_serverfd);
+void Server::processMessage(Client* client. const std::string& message)
+{
+	(void)client;
+	std::cout << "received: " << message << std::endl;
+
+	//FOR NOW JUST TO SEE WHAT IS THE MESSAGE RECEIVED, LATER USED TO PARSE AND HANDLE COMMANDS
 }
