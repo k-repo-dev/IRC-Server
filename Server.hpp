@@ -17,6 +17,8 @@ class Server
 		void runServer();
 	private:
 		int _serverfd;
+		int _clientfd;
+		char _buffer[BUFFER_SIZE];
 		const std::string _password = "1234-2567";
 		std::map<int, Client*> _clientList;
 		//Channel _channels[];
