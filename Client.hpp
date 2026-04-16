@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 
-#define BUFFER 1024
-#define MAX_IRC_LINE 510 //irc line max 512 including \r\n  
+#define BUFFERSIZE 1024
+#define MAX_IRC_LINE 512 //irc line max 512 including \r\n  
 
 class Client
 {
@@ -11,22 +11,22 @@ private:
 	std::string	_name;
 	std::string _nick;
 	bool 		_registered;
-	std::string _bufferIn[BUFFER];
-	std::string _bufferOut[BUFFER];
+	std::string _recvBuffer;
+	std::string _sendBuffer;
 	
 	
 public:
 	Client(int fd);
 	~Client();
-	void	setName(std::string name);
-	void	setNick(std::string nick);
+	void	setName(const std::string &name);
+	void	setNick(const std::string &nick);
+	std::string& getRecvBuffer(void);
+	std::string& getSendBuffer(void);
 };
 
-//calling the constructor form server:
-//int fd = accept(server_fd);
-//client(fd);
 
-	Client::Client(int fd): _clientfd(fd), _name(NULL), _nick(NULL), _registered(false){
+
+	Client::Client(int fd): _clientfd(fd), _name(""), _nick(""), _registered(false){
 
 	}
 
@@ -34,10 +34,22 @@ public:
 
 	}
 
-	void	Client::setName(std::string name){
-		_name = name;
+	std::string& Client::getRecvBuffer(void){
+		return _recvBuffer;
 	}
 
-	void	Client::setNick(std::string nick){
+	std::string& Client::getSendBuffer(void){
+		return _sendBuffer;
+	}
+
+	void	Client::setName(const std::string& name){
+		_name = name;
+		if (_nick != "")
+			_registered = true;
+	}
+
+	void	Client::setNick(const std::string& nick){
 		_nick = nick;
+		if (_name != "")
+			_registered = true;
 	}
