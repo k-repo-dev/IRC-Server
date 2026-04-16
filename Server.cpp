@@ -7,7 +7,8 @@ void Server::runServer()
 		std::cerr << "socket failed" << std::endl;
 		return;
 	}
-	sockaddr_in address = std::memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
+	struct sockaddr_in address;
+	std::memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
 	address.sin_family = AF_INET; // set type (IPv4)
 	address.sin_addr.s_addr = INADDR_ANY; //accept connections from any IP on this machine
 	address.sin_port = htons(PORT); // makes sure the port number is understood correctly outside our computer
@@ -20,22 +21,72 @@ void Server::runServer()
 	{
 		std::cerr << "listen failed" << std::endl;
 		return;
-	} 
+	}
+	int epoll_fd = epoll_create1(EPOLL_CLOEXEC); // CHECK if fail
+	struct epoll_event server_ev;
+	server_ev.events = EPOLLIN;
+	server_ev.data.fd = _serverfd;
+	epoll_ctl(epoll_fd, EPOLL_CTL_ADD, _serverfd, &server_ev); // CHECK if fail
+	struct epoll_event events[MAX_EVENT];
 	std::cout << "Listening on PORT: " << PORT << std::endl;
-	int epoll_fd = epoll_create1(EPOLL_CLOEXEC);
-	while (1)
+	while (true)
 	{
-		_clientfd = accept(_serverfd, NULL, NULL); // accept blocks here until a client connects
+		int needAttention = epoll_wait(epoll_fd, events, MAX_EVENT, -1);
+		for (int i = 0; i < needAttention; i++)
+		{
+			int currentfd = events[i].data.fd;
+			if (currentfd == _serverfd)
+			{
+				_clientfd = accept(_serverfd, NULL, NULL) // CHECK IF FAIL / accept blocks here until a client connects
+				Client* client = new Client(_clientfd);
+				_clientList[_clientfd] = client;
+				struct epoll_event client_ev;
+				client_ev.events = EPOLLIN;
+				client_ev.data.fd = _clientfd;
+				epoll_ctl(epoll_fd, EPOLL_CTL_ADD, _clientfd, &client_ev);
+				std::cout << "New client connected to server" << std::endl;
+			}
+			else
+			{
+				if (events[i].events & EPOLLIN) // client sent something, need to read it
+				{
+					char buffer[BUFFER_SIZE]; //temporary buffer
+					int bytes = recv(currentfd, buffer, sizeof(buffer),0);
+					if (bytes > 0) // there's some data to read
+					{
+						Client* client = _clientList(currentfd);
+						client->getRecvBuffer().append(buffer, bytes); // put it in the buffer of that specific client
 
-		int n = read(_clientfd, _buffer, BUFFER_SIZE -1); // reading what the client sent
-		buffer[n] = '\0';
-		std::cout << "Received: " << _buffer << "\n";
+						size_t pos = client->getRecvBuffer().find("\r\n");
+						while (pos != std::string::npos) //extract full message
+						{
+							std::string mess = client->getRecvBuffer.substr(0, pos);
+							client->getRecvBuffer.erase(0, pos + 2); //remove everything up to and including the \r\n
+							
+						}
+					}	
+				}
+				if (events[i].events & EPOLLOUT) // have something to send to client, go write it
+				{
 
-		char *resp = "Hello from server!\n"; // temporary respons to client
-		write(_clientfd, resp, std::strlen(resp));
+				}
+			}
+		}
 
-		close(_clientfd); // Done with this client
+
+
+		
+	
+
+		//int n = read(_clientfd, _buffer, BUFFER_SIZE -1); // reading what the client sent
+		//buffer[n] = '\0';
+		//std::cout << "Received: " << _buffer << "\n";
+
+		//char *resp = "Hello from server!\n"; // temporary respons to client
+		//write(_clientfd, resp, std::strlen(resp));
+
+		//close(_clientfd); // Done with this client
 	}
 
-	close(_serverfd);
+	//close(_serverfd);
 }
