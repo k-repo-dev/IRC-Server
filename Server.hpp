@@ -33,6 +33,6 @@ class Server
 		//Channel _channels[];
 
 		void acceptClient();
-		void handleClient();
-		void removeClient();
+		void handleClient(int currentfd,  const struct epoll_event& event);
+		//void removeClient(); TODO: later
 };

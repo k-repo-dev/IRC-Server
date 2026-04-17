@@ -40,32 +40,7 @@ void Server::runServer()
 			}
 			else
 			{
-				if (events[i].events & EPOLLIN) // client sent something, need to read it
-				{
-					char buffer[BUFFER_SIZE]; //temporary buffer
-					int bytes = recv(currentfd, buffer, sizeof(buffer),0);
-					if (bytes > 0) // there's some data to read
-					{
-						Client* client = _clientList[currentfd]; //client connected to its file descriptor
-						client->getRecvBuffer().append(buffer, bytes); // put it in the buffer of that specific client
-
-						size_t pos = client->getRecvBuffer().find("\r\n");
-						while (pos != std::string::npos) //extract full message
-						{
-							std::string mess = client->getRecvBuffer().substr(0, pos);
-							client->getRecvBuffer().erase(0, pos + 2); //remove everything up to and including the \r\n
-							processMessage(client, mess);
-						}
-						//TODO after processMessage puts something into the send buffer: 
-						// -check for if the buffer isn't empty 
-						//- register epoll_event, watch for EPOLLIN and EPOLLOUT
-						//- epoll_ctl() EPOLL_CTL_MOD
-					}	
-				}
-				if (events[i].events & EPOLLOUT) // have something to send to client, go write it
-				{
-
-				}
+				handleClient(currentfd, events[i]);
 			}
 		}
 	}
@@ -81,6 +56,37 @@ void Server::acceptClient()
 	client_ev.data.fd = _client_fd;
 	epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _client_fd, &client_ev);
 	std::cout << "New client connected to server" << std::endl;
+}
+
+void Server::handleClient(int currentfd, const struct epoll_event& event)
+{
+	if (event.events & EPOLLIN) // client sent something, need to read it
+	{
+		char buffer[BUFFER_SIZE]; //temporary buffer
+		int bytes = recv(currentfd, buffer, sizeof(buffer),0);
+		if (bytes > 0) // there's some data to read
+		{
+			Client* client = _clientList[currentfd]; //client connected to its file descriptor
+			client->getRecvBuffer().append(buffer, bytes); // put it in the buffer of that specific client
+
+			size_t pos = client->getRecvBuffer().find("\r\n");
+			while (pos != std::string::npos) //extract full message
+			{
+				std::string mess = client->getRecvBuffer().substr(0, pos);
+				client->getRecvBuffer().erase(0, pos + 2); //remove everything up to and including the \r\n
+				processMessage(client, mess);
+				pos = client->getRecvBuffer().find("\r\n");
+			}
+			//TODO after processMessage puts something into the send buffer: 
+			// -check for if the buffer isn't empty 
+			//- register epoll_event, watch for EPOLLIN and EPOLLOUT
+			//- epoll_ctl() EPOLL_CTL_MOD
+			}	
+			}
+			if (event.events & EPOLLOUT) // have something to send to client, go write it
+			{
+
+			}
 }
 
 void Server::processMessage(Client* client, const std::string& message)
