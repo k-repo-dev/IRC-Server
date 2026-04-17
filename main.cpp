@@ -3,7 +3,7 @@
 
 int main() {
     try {
-        Server server;
+        Server server(4241);
         server.runServer();
     } catch (const std::exception& e) {
         std::cerr << "Fatal: " << e.what() << "\n";

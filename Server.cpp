@@ -1,5 +1,29 @@
 #include "Server.hpp"
 
+Server::Server(int port) : _port(port), _serverfd(-1), _clientfd(-1)
+{
+	if ((_serverfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+		throw std::runtime_error("socket() failed");
+	int opt = 1;
+	setsockopt(_serverfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+	struct sockaddr_in address;
+	memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
+	address.sin_family = AF_INET; // set type (IPv4)
+	address.sin_addr.s_addr = INADDR_ANY; //accept connections from any IP on this machine
+	address.sin_port = htons(_port); // makes sure the port number is understood correctly outside our computer
+	if (bind(_serverfd, (sockaddr *)&address, sizeof(address)) < 0) // assigns address (IP and port) to our socket
+		throw std::runtime_error("bind() failed");
+	if ((listen(_serverfd, 10)) < 0) // Listening (backlog = 10 pending connections)
+		throw std::runtime_error("listen() failed");
+	int epoll_fd = epoll_create1(EPOLL_CLOEXEC); // CHECK if fail
+	struct epoll_event server_ev;
+	server_ev.events = EPOLLIN;
+	server_ev.data.fd = _serverfd;
+	epoll_ctl(epoll_fd, EPOLL_CTL_ADD, _serverfd, &server_ev); // CHECK if fail
+	struct epoll_event events[MAX_EVENT];
+	std::cout << "Listening on PORT: " << _port << std::endl;
+}
+
 void Server::runServer()
 {
 	if ((_serverfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
