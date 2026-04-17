@@ -36,14 +36,7 @@ void Server::runServer()
 			int currentfd = events[i].data.fd;
 			if (currentfd == _server_fd)
 			{
-				_client_fd = accept(_server_fd, NULL, NULL); // CHECK IF FAIL / accept blocks here until a client connects
-				Client* client = new Client(_client_fd);
-				_clientList[_client_fd] = client;
-				struct epoll_event client_ev;
-				client_ev.events = EPOLLIN;
-				client_ev.data.fd = _client_fd;
-				epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _client_fd, &client_ev);
-				std::cout << "New client connected to server" << std::endl;
+				acceptClient();
 			}
 			else
 			{
@@ -76,6 +69,18 @@ void Server::runServer()
 			}
 		}
 	}
+}
+
+void Server::acceptClient()
+{
+	_client_fd = accept(_server_fd, NULL, NULL); // CHECK IF FAIL / accept blocks here until a client connects
+	Client* client = new Client(_client_fd);
+	_clientList[_client_fd] = client;
+	struct epoll_event client_ev;
+	client_ev.events = EPOLLIN;
+	client_ev.data.fd = _client_fd;
+	epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _client_fd, &client_ev);
+	std::cout << "New client connected to server" << std::endl;
 }
 
 void Server::processMessage(Client* client, const std::string& message)
