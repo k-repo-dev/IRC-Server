@@ -24,8 +24,9 @@ class Server
 
 	private:
 		int _port; 
-		int _serverfd;
-		int _clientfd;
+		int _server_fd;
+		int _client_fd;
+		int _epoll_fd;
 		//char _buffer[BUFFER_SIZE];
 		const std::string _password = "1234-2567";                                                                                            
 		std::map<int, Client*> _clientList;

@@ -1,73 +1,48 @@
 #include "Server.hpp"
 
-Server::Server(int port) : _port(port), _serverfd(-1), _clientfd(-1)
+Server::Server(int port) : _port(port), _server_fd(-1), _client_fd(-1), _epoll_fd(-1)
 {
-	if ((_serverfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	if ((_server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		throw std::runtime_error("socket() failed");
 	int opt = 1;
-	setsockopt(_serverfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+	setsockopt(_server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 	struct sockaddr_in address;
 	memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
 	address.sin_family = AF_INET; // set type (IPv4)
 	address.sin_addr.s_addr = INADDR_ANY; //accept connections from any IP on this machine
 	address.sin_port = htons(_port); // makes sure the port number is understood correctly outside our computer
-	if (bind(_serverfd, (sockaddr *)&address, sizeof(address)) < 0) // assigns address (IP and port) to our socket
+	if (bind(_server_fd, (sockaddr *)&address, sizeof(address)) < 0) // assigns address (IP and port) to our socket
 		throw std::runtime_error("bind() failed");
-	if ((listen(_serverfd, 10)) < 0) // Listening (backlog = 10 pending connections)
+	if ((listen(_server_fd, 10)) < 0) // Listening (backlog = 10 pending connections)
 		throw std::runtime_error("listen() failed");
-	int epoll_fd = epoll_create1(EPOLL_CLOEXEC); // CHECK if fail
+	_epoll_fd = epoll_create1(EPOLL_CLOEXEC); // CHECK if fail
 	struct epoll_event server_ev;
 	server_ev.events = EPOLLIN;
-	server_ev.data.fd = _serverfd;
-	epoll_ctl(epoll_fd, EPOLL_CTL_ADD, _serverfd, &server_ev); // CHECK if fail
-	struct epoll_event events[MAX_EVENT];
+	server_ev.data.fd = _server_fd;
+	epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _server_fd, &server_ev); // CHECK if fail
 	std::cout << "Listening on PORT: " << _port << std::endl;
 }
 
+Server::~Server() {}
+
 void Server::runServer()
 {
-	if ((_serverfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		std::cerr << "socket failed" << std::endl;
-		return;
-	}
-	struct sockaddr_in address;
-	memset(&address, 0, sizeof(address)); // address our server will use and set everything to 0
-	address.sin_family = AF_INET; // set type (IPv4)
-	address.sin_addr.s_addr = INADDR_ANY; //accept connections from any IP on this machine
-	address.sin_port = htons(PORT); // makes sure the port number is understood correctly outside our computer
-	if (bind(_serverfd, (sockaddr *)&address, sizeof(address)) < 0) // assigns address (IP and port) to our socket
-	{
-		std::cerr << "bind failed" << std::endl;
-		return;
-	}
-	if ((listen(_serverfd, 10)) < 0) // Listening (backlog = 10 pending connections)
-	{
-		std::cerr << "listen failed" << std::endl;
-		return;
-	}
-	int epoll_fd = epoll_create1(EPOLL_CLOEXEC); // CHECK if fail
-	struct epoll_event server_ev;
-	server_ev.events = EPOLLIN;
-	server_ev.data.fd = _serverfd;
-	epoll_ctl(epoll_fd, EPOLL_CTL_ADD, _serverfd, &server_ev); // CHECK if fail
 	struct epoll_event events[MAX_EVENT];
-	std::cout << "Listening on PORT: " << PORT << std::endl;
 	while (true)
 	{
-		int needAttention = epoll_wait(epoll_fd, events, MAX_EVENT, -1);
+		int needAttention = epoll_wait(_epoll_fd, events, MAX_EVENT, -1);
 		for (int i = 0; i < needAttention; i++)
 		{
 			int currentfd = events[i].data.fd;
-			if (currentfd == _serverfd)
+			if (currentfd == _server_fd)
 			{
-				_clientfd = accept(_serverfd, NULL, NULL); // CHECK IF FAIL / accept blocks here until a client connects
-				Client* client = new Client(_clientfd);
-				_clientList[_clientfd] = client;
+				_client_fd = accept(_server_fd, NULL, NULL); // CHECK IF FAIL / accept blocks here until a client connects
+				Client* client = new Client(_client_fd);
+				_clientList[_client_fd] = client;
 				struct epoll_event client_ev;
 				client_ev.events = EPOLLIN;
-				client_ev.data.fd = _clientfd;
-				epoll_ctl(epoll_fd, EPOLL_CTL_ADD, _clientfd, &client_ev);
+				client_ev.data.fd = _client_fd;
+				epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _client_fd, &client_ev);
 				std::cout << "New client connected to server" << std::endl;
 			}
 			else
