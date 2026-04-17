@@ -34,5 +34,5 @@ class Server
 
 		void acceptClient();
 		void handleClient(int currentfd,  const struct epoll_event& event);
-		//void removeClient(); TODO: later
+		void removeClient();
 };

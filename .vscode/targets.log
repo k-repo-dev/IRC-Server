@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Fri Apr 17 09:22:45 2026
+# Make data base, printed on Fri Apr 17 11:55:09 2026
 
 # Variables
 
@@ -32,7 +31,6 @@ GDM_LANG = en
 # default
 MAKE_COMMAND := make
 # environment
- 
 QT_ACCESSIBILITY = 1
 # environment
 GOPATH = /home/krepo/go
@@ -123,7 +121,6 @@ XDG_SESSION_TYPE = x11
 # environment
 PYTHONUSERBASE = /var/data/python
 # environment
- 
 AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
 # environment
 XDG_DATA_HOME = /home/krepo/.var/app/com.visualstudio.code/data
@@ -179,6 +176,7 @@ LANGUAGE = en
 DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
 # makefile (from 'Makefile', line 17)
 YELLOW = \033[0;33m
+ 
 # environment
 XDG_CONFIG_HOME = /home/krepo/.var/app/com.visualstudio.code/config
 # makefile (from 'Makefile', line 16)
@@ -214,7 +212,6 @@ LOGNAME = krepo
 # environment
 container = flatpak
 # makefile
- 
 .DEFAULT_GOAL := all
 # environment
 SYSTEMD_EXEC_PID = 420325
@@ -349,11 +346,11 @@ obj/main.o: main.cpp
 # < := main.cpp
 # automatic
 # + := main.cpp
+ 
 # automatic
 # % := 
 # automatic
 # ^ := main.cpp
- 
 # automatic
 # ? := main.cpp
 # automatic
@@ -404,7 +401,7 @@ re: fclean all
 Server.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-17 09:22:38.617153065
+#  Last modified 2026-04-17 11:51:54.247425902
 #  File has been updated.
 #  Successfully updated.
 
@@ -437,7 +434,7 @@ fclean: clean
 main.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-17 09:20:42.811895142
+#  Last modified 2026-04-17 11:51:54.24942598
 #  File has been updated.
 #  Successfully updated.
 
@@ -509,8 +506,7 @@ Client.cpp:
 
 # strcache performance: lookups = 62 / hit rate = 50%
 # hash-table stats:
- 
 # Load=31/8192=0%, Rehash=0, Collisions=0/62=0%
-# Finished Make data base on Fri Apr 17 09:22:45 2026
+# Finished Make data base on Fri Apr 17 11:55:09 2026
 
  
