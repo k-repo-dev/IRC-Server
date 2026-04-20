@@ -28,3 +28,28 @@ Client::Client(int fd): _clientfd(fd), _name(""), _nick(""), _registered(false),
 		if (_name != "")
 			_registered = true;
 	}
+
+	int Client::getFD() const
+	{
+		return _clientfd;
+	}
+
+	bool Client::isRegistered() const
+	{
+		return _registered;
+	}
+
+	std::string Client::getNick() const
+	{
+		return _nick;
+	}
+
+	std::string Client::getName() const
+	{
+		return _name;
+	}
+
+	void Client::setRegistered(bool val)
+	{
+		_registered = val;
+	}
