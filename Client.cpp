@@ -58,4 +58,3 @@ bool	Client::isPasswordValidated(void) const
 {
 	return _passwordValidated;
 }
-
