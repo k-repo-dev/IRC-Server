@@ -11,6 +11,7 @@ private:
 	std::string	_name;
 	std::string _nick;
 	bool 		_registered;
+	bool		_passwordValidated;
 	std::string _recvBuffer;
 	std::string _sendBuffer;
 	
@@ -26,6 +27,8 @@ public:
 	void	setNick(const std::string &nick);
 	std::string getNick() const;
 	std::string getName() const;
+	void	setPasswordValidated(bool val);
+	bool	isPasswordValidated(void) const;
 	std::string& getRecvBuffer(void);
 	std::string& getSendBuffer(void);
 };

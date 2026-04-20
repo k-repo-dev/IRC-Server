@@ -1,55 +1,60 @@
 #include "Client.hpp"
 
 
-Client::Client(int fd): _clientfd(fd), _name(""), _nick(""), _registered(false), _recvBuffer(""), _sendBuffer(""){
+Client::Client(int fd): _clientfd(fd), _name(""), _nick(""), _registered(false), _passwordValidated(false), _recvBuffer(""), _sendBuffer(""){
 		(void)_clientfd;
-	}
+}
 
-	Client::~Client(){
+Client::~Client(){}
 
-	}
+std::string& Client::getRecvBuffer(void)
+{
+	return _recvBuffer;
+}
 
-	std::string& Client::getRecvBuffer(void){
-		return _recvBuffer;
-	}
+std::string& Client::getSendBuffer(void){
+	return _sendBuffer;
+}
 
-	std::string& Client::getSendBuffer(void){
-		return _sendBuffer;
-	}
+void	Client::setName(const std::string& name)
+{
+	_name = name;
+}
 
-	void	Client::setName(const std::string& name){
-		_name = name;
-		if (_nick != "")
-			_registered = true;
-	}
+void	Client::setNick(const std::string& nick)
+{
+	_nick = nick;
+}
+int Client::getFD() const
+{
+	return _clientfd;
+}
 
-	void	Client::setNick(const std::string& nick){
-		_nick = nick;
-		if (_name != "")
-			_registered = true;
-	}
+bool Client::isRegistered() const
+{
+	return _registered;
+}
 
-	int Client::getFD() const
-	{
-		return _clientfd;
-	}
+std::string Client::getNick() const
+{
+	return _nick;
+}
 
-	bool Client::isRegistered() const
-	{
-		return _registered;
-	}
+std::string Client::getName() const
+{
+	return _name;
+}
 
-	std::string Client::getNick() const
-	{
-		return _nick;
-	}
+void Client::setRegistered(bool val)
+{
+	_registered = val;
+}
+void	Client::setPasswordValidated(bool val)
+{
+	_passwordValidated = val;
+}
 
-	std::string Client::getName() const
-	{
-		return _name;
-	}
-
-	void Client::setRegistered(bool val)
-	{
-		_registered = val;
-	}
+bool	Client::isPasswordValidated(void) const
+{
+	return _passwordValidated;
+}
