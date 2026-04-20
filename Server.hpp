@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 #include <cstring>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -38,4 +39,5 @@ class Server
 		void setNonBlocking(int fd);
 		void sendToClient(Client* client, const std::string& msg);
 		void processMessage(Client* client, const std::string& line);
+		void handlePass(Client *client, std::vector<std::string> params);
 };
