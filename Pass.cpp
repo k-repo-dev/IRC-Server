@@ -2,7 +2,7 @@
 
 void Server::handlePass(Client *client, std::vector<std::string> params)
 {
-	std::string nick = client.getNi
+	std::string nick = client->getNick();
 	if (client->isRegistered())
 	{
 		client->getSendBuffer() += ""
