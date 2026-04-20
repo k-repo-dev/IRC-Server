@@ -1,5 +1,4 @@
  #include "Server.hpp"
- #include "Client.cpp"
 
 static command	get_commands(std::string cmd){
 	if (cmd == "NICK")
@@ -26,7 +25,7 @@ static command	get_commands(std::string cmd){
 		return TOPIC;
 	if (cmd == "MODE")
 		return MODE;
-	if (cmd == "DEFAULT")
+	else
 		return DEFAULT;
 
 }
@@ -50,6 +49,7 @@ static command	get_commands(std::string cmd){
 		case USER:
 			break; 
 		case PASS:
+			handlePass(client, params);
 			break;
 		case QUIT:
 			break;
@@ -70,5 +70,7 @@ static command	get_commands(std::string cmd){
 		case MODE:
 			break;
 		default:
+			std::cout << "yayayayay\n";
 			break;
  }
+}

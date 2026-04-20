@@ -123,9 +123,11 @@ void Server::handleClient(int fd)
 
 void Server::processMessage(Client* client, const std::string& line)
 {
+	detectCommands(client);
+	(void) line;
 	// placeholder - just echo the parsed line back for now
-	std::cout << "fd=" << client->getFD() << " | line: [" << line << "]\n";
-	sendToClient(client, "echo: " + line + "\r\n");
+	// std::cout << "fd=" << client->getFD() << " | line: [" << line << "]\n";
+	// sendToClient(client, "echo: " + line + "\r\n");
 }
 
 void Server::sendToClient(Client* client, const std::string& msg)
