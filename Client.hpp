@@ -31,6 +31,7 @@ public:
 	bool	isPasswordValidated(void) const;
 	std::string& getRecvBuffer(void);
 	std::string& getSendBuffer(void);
+	void setRecvBuffer(const std::string& buffer);
 };
 
 

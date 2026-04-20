@@ -16,6 +16,12 @@ std::string& Client::getSendBuffer(void){
 	return _sendBuffer;
 }
 
+void Client::setRecvBuffer(const std::string& buffer)
+{
+	_recvBuffer = buffer;
+}
+
+
 void	Client::setName(const std::string& name)
 {
 	_name = name;

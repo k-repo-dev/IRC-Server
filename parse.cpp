@@ -1,6 +1,6 @@
  #include "Server.hpp"
 
-static command	get_commands(std::string cmd){
+static command	getCommands(std::string cmd){
 	if (cmd == "NICK")
 		return NICK;
 	if (cmd == "USER")
@@ -34,6 +34,8 @@ static command	get_commands(std::string cmd){
 	std::string cmd;
 	std::string arg;
 	std::vector<std::string> params;
+	std::string buf = client->getRecvBuffer();
+	std::cout << buf;
 	std::istringstream stream(client->getRecvBuffer());
     stream >> cmd;
 	while (stream >> arg){
@@ -43,7 +45,7 @@ static command	get_commands(std::string cmd){
 		params.push_back(arg);
 	}
 
-	switch(get_commands(cmd)){
+	switch(getCommands(cmd)){
 		case NICK:
 			break;
 		case USER:
@@ -70,7 +72,7 @@ static command	get_commands(std::string cmd){
 		case MODE:
 			break;
 		default:
-			std::cout << "yayayayay\n";
+			std::cout << "no command\n";
 			break;
  }
 }
