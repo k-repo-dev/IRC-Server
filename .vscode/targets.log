@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Apr 17 11:55:09 2026
+# Make data base, printed on Mon Apr 20 08:08:31 2026
 
 # Variables
 
@@ -65,7 +65,7 @@ OLDPWD = /home/krepo
 # environment
 VSCODE_CODE_CACHE_PATH = /home/krepo/.var/app/com.visualstudio.code/config/Code/CachedData/41dd792b5e652393e7787322889ed5fdc58bd75b
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session4
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session5
 # environment
 LANG = C
 # environment
@@ -75,7 +75,7 @@ XAUTHORITY = /run/flatpak/Xauthority
 # default
 .INCLUDE_DIRS := /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.94
+GNOME_TERMINAL_SERVICE = :1.90
 # environment
 ALSA_CONFIG_DIR = /usr/share/alsa
 # makefile
@@ -113,7 +113,7 @@ ZSH = /home/krepo/.oh-my-zsh
 # environment
 VSCODE_PID = 22
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_6398_D6E6Cd
+KRB5CCNAME = FILE:/tmp/krb5cc_6398_LRU3DO
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -125,7 +125,7 @@ AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
 # environment
 XDG_DATA_HOME = /home/krepo/.var/app/com.visualstudio.code/data
 # environment
-SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/420302,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/420302
+SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/676435,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/676435
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ SANDBOX_LD_LIBRARY_PATH = /app/lib
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/6f84c432_778a_411b_9281_6d1dc79d3353
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4727dbd3_8fea_4c83_9c8b_9672813a2828
 # environment
 MAKELEVEL := 0
 # default
@@ -172,11 +172,11 @@ MAKEFILES :=
 LANGUAGE = en
 # automatic
 ^F = $(notdir $^)
+ 
 # environment
 DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
 # makefile (from 'Makefile', line 17)
 YELLOW = \033[0;33m
- 
 # environment
 XDG_CONFIG_HOME = /home/krepo/.var/app/com.visualstudio.code/config
 # makefile (from 'Makefile', line 16)
@@ -214,7 +214,7 @@ container = flatpak
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 420325
+SYSTEMD_EXEC_PID = 676463
 # makefile (from 'Makefile', line 5)
 RM = rm -rf
 # environment
@@ -346,13 +346,13 @@ obj/main.o: main.cpp
 # < := main.cpp
 # automatic
 # + := main.cpp
- 
 # automatic
 # % := 
 # automatic
 # ^ := main.cpp
 # automatic
 # ? := main.cpp
+ 
 # automatic
 # | := 
 # variable set hash-table stats:
@@ -507,6 +507,6 @@ Client.cpp:
 # strcache performance: lookups = 62 / hit rate = 50%
 # hash-table stats:
 # Load=31/8192=0%, Rehash=0, Collisions=0/62=0%
-# Finished Make data base on Fri Apr 17 11:55:09 2026
+# Finished Make data base on Mon Apr 20 08:08:31 2026
 
  

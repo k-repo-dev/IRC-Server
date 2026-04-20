@@ -8,6 +8,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/epoll.h>
+#include <fcntl.h>
 #include "Client.hpp"
 
 
@@ -35,4 +36,5 @@ class Server
 		void acceptClient();
 		void handleClient(int currentfd,  const struct epoll_event& event);
 		void removeClient();
+		void setNonBlocking(int fd);
 };
