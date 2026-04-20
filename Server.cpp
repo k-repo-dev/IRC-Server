@@ -131,20 +131,20 @@ void Server::handleClient(int fd)
 	std::string& data = _clientList[fd]->getRecvBuffer();
 	if (!data.empty())
 	{
-		std::cout << "fd= " << fd << " says: " << data;
+		std::cout << "fd=" << fd << " says: " << data;
 		write(fd, data.c_str(), data.size()); // echo back
 		data.clear();
 	}
 }
 
-void Server::processMessage(Client* client, const std::string& message)
+/*void Server::processMessage(Client* client, const std::string& message)
 {
 	(void)client;
 	std::cout << "received: " << message << std::endl;
 
 	//FOR NOW JUST TO SEE WHAT IS THE MESSAGE RECEIVED, LATER USED TO PARSE AND HANDLE COMMANDS
 	// PUTTING INTO THE SEND CLIENT BUFFER 
-}
+}*/
 
 void Server::setNonBlocking(int fd)
 {
@@ -154,5 +154,8 @@ void Server::setNonBlocking(int fd)
 
 void Server::removeClient(int fd)
 {
-	(void)fd;
+	epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
+	close(fd);
+	_clientList.erase(fd);
+	std::cout << "Client fd=" << fd << " disconnected\n"; 
 }

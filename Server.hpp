@@ -22,7 +22,7 @@ class Server
 		Server(int port);
 		~Server();
 		void runServer();
-		void processMessage(Client* client, const std::string& message);
+		//void processMessage(Client* client, const std::string& message);
 
 	private:
 		int _port; 
