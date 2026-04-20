@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 #include <sys/epoll.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include "Client.hpp"
 
 
@@ -34,7 +35,8 @@ class Server
 		//Channel _channels[];
 
 		void acceptClient();
-		void handleClient(int currentfd,  const struct epoll_event& event);
-		void removeClient();
+		//void handleClient(int currentfd,  const struct epoll_event& event);
+		void handleClient(int fd);
+		void removeClient(int fd);
 		void setNonBlocking(int fd);
 };

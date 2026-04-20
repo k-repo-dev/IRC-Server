@@ -17,7 +17,7 @@ Server::Server(int port) : _port(port), _server_fd(-1), _client_fd(-1), _epoll_f
 	if (bind(_server_fd, (sockaddr *)&address, sizeof(address)) < 0) // assigns address (IP and port) to our socket
 		throw std::runtime_error("bind() failed");
 	
-		if ((listen(_server_fd, 10)) < 0) // Listening (backlog = 10 pending connections)
+	if ((listen(_server_fd, 10)) < 0) // Listening (backlog = 10 pending connections)
 		throw std::runtime_error("listen() failed");
 	
 	setNonBlocking(_server_fd);
@@ -51,7 +51,8 @@ void Server::runServer()
 			}
 			else
 			{
-				handleClient(currentfd, events[i]);
+				//handleClient(currentfd, events[i]);
+				handleClient(currentfd);
 			}
 		}
 	}
@@ -64,16 +65,17 @@ void Server::acceptClient()
 
 	setNonBlocking(_client_fd);
 
-	Client* client = new Client(_client_fd);
-	_clientList[_client_fd] = client;
 	struct epoll_event client_ev;
 	client_ev.events = EPOLLIN;
 	client_ev.data.fd = _client_fd;
 	epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _client_fd, &client_ev);
-	std::cout << "New client connected to server" << std::endl;
+
+	Client* client = new Client(_client_fd);
+	_clientList[_client_fd] = client;
+	std::cout << "New client: fd= " << _client_fd << std::endl;
 }
 
-void Server::handleClient(int currentfd, const struct epoll_event& event)
+/*void Server::handleClient(int currentfd, const struct epoll_event& event)
 {
 	if (event.events & EPOLLIN) // client sent something, need to read it
 	{
@@ -102,6 +104,37 @@ void Server::handleClient(int currentfd, const struct epoll_event& event)
 			{
 
 			}
+}*/
+
+void Server::handleClient(int fd)
+{
+	char buffer[BUFFER_SIZE];
+
+	while (true)
+	{
+		int bytes = read(fd, buffer, BUFFER_SIZE - 1);
+
+		if (bytes == -1 && errno == EAGAIN)
+			break; // fully drained, wait for next epoll event
+
+		if (bytes <= 0)
+		{
+			removeClient(fd);
+			return ;
+		}
+
+		buffer[bytes] = '\0';
+ 		_clientList[fd]->getRecvBuffer() += buffer; // accumulate into per-client buffer
+	}
+
+	// do something with the complete buffer
+	std::string& data = _clientList[fd]->getRecvBuffer();
+	if (!data.empty())
+	{
+		std::cout << "fd= " << fd << " says: " << data;
+		write(fd, data.c_str(), data.size()); // echo back
+		data.clear();
+	}
 }
 
 void Server::processMessage(Client* client, const std::string& message)
@@ -117,4 +150,9 @@ void Server::setNonBlocking(int fd)
 {
 	int flags = fcntl(fd, F_GETFL, 0); // read current flags
 	fcntl(fd, F_SETFL, flags | O_NONBLOCK); // write them back with O_NONBLOCK added
+}
+
+void Server::removeClient(int fd)
+{
+	(void)fd;
 }
