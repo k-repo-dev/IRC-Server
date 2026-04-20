@@ -18,8 +18,14 @@ private:
 public:
 	Client(int fd);
 	~Client();
+
+	int getFD() const;
+	bool isRegistered() const;
+	void setRegistered(bool val);
 	void	setName(const std::string &name);
 	void	setNick(const std::string &nick);
+	std::string getNick() const;
+	std::string getName() const;
 	std::string& getRecvBuffer(void);
 	std::string& getSendBuffer(void);
 };
