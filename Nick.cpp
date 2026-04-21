@@ -32,16 +32,19 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 	if (!client->isPasswordValidated())
 	{
 		client->getSendBuffer() += "451 " + nick + " :You have not registered\r\n";
+		std::cout << "not registered\n";
 		return;
 	}
 	if (params.empty())
 	{
 		client->getSendBuffer() += "431 " + nick + " :No nickname given\r\n";
+		std::cout << "no nickname\n";
 		return;
 	}
 	if (params.size() > 1 || !isValidNick(params[0]))
 	{
 		client->getSendBuffer() += "432 " + nick + " " + params[0] + " :Erroneus nickname\r\n";
+		std::cout << "wrong nickname\n";
 		return;
 	}
 	for (std::map<int, Client*>::iterator it = _clientList.begin(); it != _clientList.end(); it++)
@@ -49,6 +52,7 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 		if (it->second->getNick() == params[0])
 		{
 			client->getSendBuffer() += "433 " + nick + " " + params[0] + " :Nickname is already in use\r\n";
+			std::cout << "nick name in use\n";
 			return;
 		}
 	}
@@ -56,5 +60,6 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 	std::string oldNick = nick; // save the old nick or * if not set
 	client->setNick(params[0]);
 	client->getSendBuffer() += ":" + oldNick + " NICK " + params[0] + "\r\n"; // success message
+	std::cout << "nickname is" + params[0] + '\n';
 	checkRegistered(client);
 }
