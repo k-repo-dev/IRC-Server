@@ -47,7 +47,7 @@ static command	getCommands(std::string cmd){
 
 	switch(getCommands(cmd)){
 		case NICK:
-			break;
+			handleNick(client, params);
 		case USER:
 			break; 
 		case PASS:
