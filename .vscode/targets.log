@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Apr 21 09:40:24 2026
+# Make data base, printed on Tue Apr 21 12:25:05 2026
 
 # Variables
 
@@ -65,7 +65,7 @@ OLDPWD = /home/krepo
 # environment
 VSCODE_CODE_CACHE_PATH = /home/krepo/.var/app/com.visualstudio.code/config/Code/CachedData/41dd792b5e652393e7787322889ed5fdc58bd75b
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session6
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session7
 # environment
 LANG = C
 # environment
@@ -75,7 +75,7 @@ XAUTHORITY = /run/flatpak/Xauthority
 # default
 .INCLUDE_DIRS := /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.90
+GNOME_TERMINAL_SERVICE = :1.93
 # environment
 ALSA_CONFIG_DIR = /usr/share/alsa
 # makefile
@@ -113,7 +113,7 @@ ZSH = /home/krepo/.oh-my-zsh
 # environment
 VSCODE_PID = 22
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_6398_QmEjDg
+KRB5CCNAME = FILE:/tmp/krb5cc_6398_RjyJqR
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -125,7 +125,7 @@ AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
 # environment
 XDG_DATA_HOME = /home/krepo/.var/app/com.visualstudio.code/data
 # environment
-SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/782506,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/782506
+SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/821219,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/821219
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ SANDBOX_LD_LIBRARY_PATH = /app/lib
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/2f2b2e14_6ed5_4722_905b_933219af0c09
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f3eb4275_1dba_49fe_9ff8_0a9f64e9abb3
 # environment
 MAKELEVEL := 0
 # default
@@ -172,8 +172,8 @@ MAKEFILES :=
 LANGUAGE = en
 # automatic
 ^F = $(notdir $^)
-# environment
  
+# environment
 DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
 # makefile (from 'Makefile', line 17)
 YELLOW = \033[0;33m
@@ -214,7 +214,7 @@ container = flatpak
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 782528
+SYSTEMD_EXEC_PID = 821247
 # makefile (from 'Makefile', line 5)
 RM = rm -rf
 # environment
@@ -308,9 +308,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 2064, inode 29413785): 12 files, no impossibilities.
+# . (device 2064, inode 29413785): 13 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -342,6 +342,7 @@ obj/parse.o: parse.cpp
 #  Implicit/static pattern stem: 'parse'
 #  File is an intermediate prerequisite.
 #  File is secondary (prerequisite of .SECONDARY).
+ 
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 27):
@@ -354,7 +355,6 @@ obj/main.o: main.cpp
 #  Implicit/static pattern stem: 'main'
 #  File is an intermediate prerequisite.
 #  File is secondary (prerequisite of .SECONDARY).
- 
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
@@ -495,7 +495,7 @@ obj/Server.d:
 parse.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-21 08:01:20.548521184
+#  Last modified 2026-04-21 10:27:26.49514194
 #  File has been updated.
 #  Successfully updated.
 
@@ -514,6 +514,7 @@ obj/Pass.d:
 obj/Server.o: Server.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Server'
+ 
 #  File is an intermediate prerequisite.
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
@@ -533,13 +534,12 @@ ircserv: obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o
 #  recipe to execute (from 'Makefile', line 23):
 		$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 		@echo "$(GREEN)Success: $(NAME) built.$(RESET)"
- 
 
 # Not a target:
 Client.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-21 08:01:20.547521147
+#  Last modified 2026-04-21 10:17:20.053660585
 #  File has been updated.
 #  Successfully updated.
 
@@ -556,12 +556,12 @@ Client.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 39 / storage = 341 B / avg = 8 B
-# current buf: size = 8162 B / used = 341 B / count = 39 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 40 / storage = 357 B / avg = 8 B
+# current buf: size = 8162 B / used = 357 B / count = 40 / avg = 8 B
 
-# strcache performance: lookups = 78 / hit rate = 50%
+# strcache performance: lookups = 79 / hit rate = 49%
 # hash-table stats:
-# Load=39/8192=0%, Rehash=0, Collisions=0/78=0%
-# Finished Make data base on Tue Apr 21 09:40:24 2026
+# Load=40/8192=0%, Rehash=0, Collisions=0/79=0%
+# Finished Make data base on Tue Apr 21 12:25:05 2026
 
  
