@@ -46,7 +46,7 @@ class Server
 		void handlePass(Client *client, std::vector<std::string> params);
 		void handleNick(Client *client, std::vector<std::string> params);
 		bool isValidNick(const std::string& nick);
-		void detectCommands(Client* client);
+		void detectCommands(Client* client, const std::string&line);
 		void checkRegistered(Client *client);
 };
 

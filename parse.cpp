@@ -30,14 +30,12 @@ static command	getCommands(std::string cmd){
 
 }
 
- void   Server::detectCommands(Client* client){
+ void   Server::detectCommands(Client* client, const std::string&line){
 	std::string cmd;
 	std::string arg;
 	std::vector<std::string> params;
-	std::string buf = client->getRecvBuffer();
-	std::cout << buf;
-	std::istringstream stream(client->getRecvBuffer());
-    stream >> cmd;
+	std::istringstream stream(line);
+    stream >> cmd; 
 	while (stream >> arg){
 		// if (arg[0] == ':'){
 		// 	needs to handle rest as one param
