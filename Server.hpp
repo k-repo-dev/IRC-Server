@@ -18,6 +18,8 @@
 
 #define BUFFER_SIZE 1024
 #define MAX_EVENT 64
+#define NETWORK_NAME "ft_irc"
+#define HOST "localhost"
 
 class Server
 {
@@ -42,7 +44,10 @@ class Server
 		void sendToClient(Client* client, const std::string& msg);
 		void processMessage(Client* client, const std::string& line);
 		void handlePass(Client *client, std::vector<std::string> params);
-		void detectCommands(Client* client);
+		void handleNick(Client *client, std::vector<std::string> params);
+		bool isValidNick(const std::string& nick);
+		void detectCommands(Client* client, const std::string&line);
+		void checkRegistered(Client *client);
 };
 
 enum command{

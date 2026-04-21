@@ -123,8 +123,7 @@ void Server::handleClient(int fd)
 
 void Server::processMessage(Client* client, const std::string& line)
 {
-	client->setRecvBuffer(line);
-	detectCommands(client);
+	detectCommands(client, line);
 	// placeholder - just echo the parsed line back for now
 	// std::cout << "fd=" << client->getFD() << " | line: [" << line << "]\n";
 	// sendToClient(client, "echo: " + line + "\r\n");
