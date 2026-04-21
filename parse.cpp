@@ -37,9 +37,14 @@ static command	getCommands(std::string cmd){
 	std::istringstream stream(line);
     stream >> cmd; 
 	while (stream >> arg){
-		// if (arg[0] == ':'){
+		if (arg[0] == ':')
+		{
 		// 	needs to handle rest as one param
-		// }
+		std::string trailing;
+		std::getline(stream, trailing);
+		params.push_back(arg.substr(1) + trailing); // strips the ':'
+		break;
+		}
 		params.push_back(arg);
 	}
 
@@ -48,6 +53,7 @@ static command	getCommands(std::string cmd){
 			handleNick(client, params);
 			break;
 		case USER:
+			handleUser(client, params);
 			break; 
 		case PASS:
 			handlePass(client, params);

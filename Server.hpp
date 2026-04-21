@@ -48,6 +48,8 @@ class Server
 		bool isValidNick(const std::string& nick);
 		void detectCommands(Client* client, const std::string&line);
 		void checkRegistered(Client *client);
+
+		void handleUser(Client* client, std::vector<std::string>& params);
 };
 
 enum command{
