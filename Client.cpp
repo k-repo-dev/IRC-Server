@@ -1,9 +1,8 @@
 #include "Client.hpp"
 
 
-Client::Client(int fd): _clientfd(fd), _name(""), _nick(""), _registered(false), _passwordValidated(false), _recvBuffer(""), _sendBuffer(""){
-		(void)_clientfd;
-}
+Client::Client(int fd): _clientfd(fd), _registered(false),
+	 _passwordValidated(false), _hasUser(false), _recvBuffer(""), _sendBuffer("") {}
 
 Client::~Client(){}
 
@@ -22,9 +21,15 @@ void Client::setRecvBuffer(const std::string& buffer)
 }
 
 
-void	Client::setName(const std::string& name)
+void	Client::setUserName(const std::string& username)
 {
-	_name = name;
+	_username = username;
+	_hasUser = true;
+}
+
+void	Client::setRealName(const std::string& realname)
+{
+	_realname = realname;
 }
 
 void	Client::setNick(const std::string& nick)
@@ -41,14 +46,24 @@ bool Client::isRegistered() const
 	return _registered;
 }
 
+bool Client::getHasUser() const
+{
+	return _hasUser;
+}
+
 std::string Client::getNick() const
 {
 	return _nick;
 }
 
-std::string Client::getName() const
+std::string Client::getUserName() const
 {
-	return _name;
+	return _username;
+}
+
+std::string Client::getRealName() const
+{
+	return _realname;
 }
 
 void Client::setRegistered(bool val)
