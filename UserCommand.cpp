@@ -20,5 +20,25 @@ void Server::handleUser(Client* client, std::vector<std::string>& params)
 			":server 461 * USER :Not enough parameters\r\n");
 		return;
 	}
-	
+
+	// params[0] = username
+	// params[1] = 0
+	// params[2] = *
+	// params[3] = realname (trailing ':' already stripped by detectCommands)
+	std::string username = params[0];
+	std::string realname = params[3];
+
+	// IRC conventional USERLEN max is 10
+	const size_t USERLEN = 10;
+	if (username.size() > USERLEN)
+		username = username.substr(0, USERLEN);
+
+	// prepending '~' when no indent server is running
+	username = "~" + username;
+
+	client->setUserName(username);
+	client->setRealName(realname);
+
+	// check if registration is now complete
+	checkRegistered(client); // Done by Nuria on her branch
 }
