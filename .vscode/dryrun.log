@@ -9,7 +9,13 @@ echo "\033[0;33mCompiling: Server.cpp\033[0m"
 mkdir -p obj/
 c++ -Wall -Wextra -Werror -std=c++20 -MMD -MP -c Client.cpp -o obj/Client.o
 echo "\033[0;33mCompiling: Client.cpp\033[0m"
-c++ -Wall -Wextra -Werror -std=c++20 obj/main.o obj/Server.o obj/Client.o -o ircserv
+mkdir -p obj/
+c++ -Wall -Wextra -Werror -std=c++20 -MMD -MP -c parse.cpp -o obj/parse.o
+echo "\033[0;33mCompiling: parse.cpp\033[0m"
+mkdir -p obj/
+c++ -Wall -Wextra -Werror -std=c++20 -MMD -MP -c Pass.cpp -o obj/Pass.o
+echo "\033[0;33mCompiling: Pass.cpp\033[0m"
+c++ -Wall -Wextra -Werror -std=c++20 obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o -o ircserv
 echo "\033[0;32mSuccess: ircserv built.\033[0m"
 make: Leaving directory '/home/krepo/GITHUB/rank5/ft_irc'
  
