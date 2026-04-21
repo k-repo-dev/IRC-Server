@@ -38,7 +38,7 @@ void Server::handleUser(Client* client, std::vector<std::string>& params)
 
 	client->setUserName(username);
 	client->setRealName(realname);
-
+	std::cout << "username is: " << client->getUserName() << std::endl;
 	// check if registration is now complete
-	checkRegistered(client); // Done by Nuria on her branch
+	checkRegistered(client);
 }
