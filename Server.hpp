@@ -12,6 +12,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "Client.hpp"
+#include <vector>
+#include <sstream>
 
 
 #define BUFFER_SIZE 1024
@@ -40,4 +42,22 @@ class Server
 		void sendToClient(Client* client, const std::string& msg);
 		void processMessage(Client* client, const std::string& line);
 		void handlePass(Client *client, std::vector<std::string> params);
+		void detectCommands(Client* client);
 };
+
+enum command{
+	NICK,
+	USER,
+	PASS,
+	QUIT,
+	JOIN,
+	PART,
+	PRIVMSG,
+	PING,
+	KICK,
+	INVITE,
+	TOPIC,
+	MODE,
+	DEFAULT,
+};
+
