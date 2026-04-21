@@ -6,7 +6,7 @@ RM			= rm -rf
 
 OBJ_DIR		= obj/
 
-SRCS		= main.cpp Server.cpp Client.cpp parse.cpp Pass.cpp Nick.cpp\
+SRCS		= main.cpp Server.cpp Client.cpp parse.cpp Pass.cpp Nick.cpp Channel.cpp\
 
 
 OBJS		= $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
