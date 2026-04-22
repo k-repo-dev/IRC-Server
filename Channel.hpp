@@ -29,6 +29,7 @@ public:
 	bool isOperator(Client* client) const;
 	const std::string& getKey(void) const;
 	void setKey(const std::string& key);
+
 	bool isMember(Client* client) const;
 	const std::unordered_map<int, Client*>& getMembers() const;
 	Client* getMemberByNick(const std::string& nick) const;
@@ -37,7 +38,7 @@ public:
 	const std::string& getTopicSetter(void) const;
 	const std::string& getTopicTime(void) const;
 	bool isTopicRestricted(void) const;
-
+	const std::string&	getChannel(void) const;
 };
 
 

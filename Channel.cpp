@@ -24,6 +24,10 @@ bool	Channel::isOperator(Client* client) const{
 	return _operators.find(client->getFD()) != _operators.end();
 }
 
+const std::string&	Channel::getChannel(void) const{
+	return _channel;
+}
+
 const std::string&	Channel::getKey(void) const{
 	return _key;
 }
