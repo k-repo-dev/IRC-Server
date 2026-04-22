@@ -59,6 +59,7 @@ static command	getCommands(std::string cmd){
 			handlePass(client, params);
 			break;
 		case QUIT:
+			handleQuit(client, params);
 			break;
 		case JOIN:
 			break;

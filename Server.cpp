@@ -114,9 +114,17 @@ void Server::handleClient(int fd)
 			(pos = data.find("\n")) != std::string::npos)
 	{
 		std::string line = data.substr(0, pos);
-		data.erase(0, pos + 2);
+		size_t delimLen = (pos + 1 < data.size() && data[pos] == '\r'
+			&& data[pos + 1] == '\n') ? 2 : 1;
+		data.erase(0, pos + delimLen);
+		if (!line.empty() && line.back() == '\r')
+			line.pop_back();
 		if (!line.empty())
+		{
 			processMessage(_clientList[fd], line);
+			if (_clientList.find(fd) == _clientList.end())
+				return;
+		}
 	}
 	// partial line stays in data - handled when rest arrives
 }
@@ -175,8 +183,13 @@ void Server::setNonBlocking(int fd)
 
 void Server::removeClient(int fd)
 {
+	std::map<int, Client*>::iterator it = _clientList.find(fd);
+	if (it != _clientList.end())
+	{
+		delete it->second;
+		_clientList.erase(it);
+	}
 	epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
 	close(fd);
-	_clientList.erase(fd);
 	std::cout << "Client fd=" << fd << " disconnected\n"; 
 }

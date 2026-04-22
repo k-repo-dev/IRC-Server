@@ -50,6 +50,7 @@ class Server
 		void checkRegistered(Client *client);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
+		void handleQuit(Client* client, std::vector<std::string>& params);
 };
 
 enum command{
