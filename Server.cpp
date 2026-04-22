@@ -114,7 +114,8 @@ void Server::handleClient(int fd)
 			(pos = data.find("\n")) != std::string::npos)
 	{
 		std::string line = data.substr(0, pos);
-		data.erase(0, pos + 2);
+		size_t delimLen = (data[pos] == '\r') ? 2 : 1;
+		data.erase(0, pos + delimLen);
 		if (!line.empty())
 		{
 			processMessage(_clientList[fd], line);
