@@ -6,8 +6,13 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 	// if empty, then reason is just "Quit: "
 	std::string reason = "Quit: ";
 	if (!params.empty())
-		reason += params[0];
-	
+	{
+		std::string joined = params[0];
+		for (size_t i = 1; i < params.size(); i++)
+			joined += " " + params[i];
+		reason += joined;
+	}
+
 	// acknowledging the client f receiving the QUIT command with an ERROR message
 	std::string errorMsg =
 		"ERROR :Closing link: " + client->getNick()
