@@ -7,7 +7,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 	if (params.size() < 2) // needs at least channel and user to kick
 	{
 		sendToClient(client,
-			":461 " + client->getNick() + " :Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " :Not enough parameters\r\n");
 		return;
 	}
 	std::string channelName = params[0];
@@ -15,7 +15,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 	if (_channelList.find(channelName) == _channelList.end()) // look for channel in map to see if it exists
 	{
 		sendToClient(client,
-			":403 " + client->getNick() + "" + channelName + " :No such channel\r\n");
+			std::string(":") + SERVER_NAME + " 403 " + client->getNick() + "" + channelName + " :No such channel\r\n");
 		return;
 	}
 
@@ -23,13 +23,13 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 	if (!channel->isMember(client))
 	{
 		sendToClient(client,
-			":442 " + client->getNick() + "" + channelName + " :You're not on that channel\r\n");
+			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + "" + channelName + " :You're not on that channel\r\n");
 		return;
 	}
 	if (!channel->isOperator(client))
 	{
 		sendToClient(client,
-			":482 " + client->getNick() + "" + channelName + " :You're not channel operator\r\n");
+			std::string(":") + SERVER_NAME + " 482 " + client->getNick() + "" + channelName + " :You're not channel operator\r\n");
 		return;
 	}
 
@@ -45,7 +45,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 		if (target == nullptr)
 		{
 			sendToClient(client,
-				":441 " + client->getNick() + "" + kicked[i] + "" + channelName + " :They aren't on that channel\r\n");
+				std::string(":") + SERVER_NAME + " 441 " + client->getNick() + "" + kicked[i] + "" + channelName + " :They aren't on that channel\r\n");
 			continue; // if we have several targets, we need to try to kick each one
 		}
 

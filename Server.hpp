@@ -19,7 +19,8 @@
 
 #define BUFFER_SIZE 1024
 #define MAX_EVENT 64
-#define NETWORK_NAME "ft_irc"
+#define NETWORK_NAME "Swifties Server"
+#define SERVER_NAME "swifties.local"
 #define HOST "localhost"
 
 class Server
