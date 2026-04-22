@@ -14,6 +14,7 @@
 #include "Client.hpp"
 #include <vector>
 #include <sstream>
+#include "Channel.hpp"
 
 
 #define BUFFER_SIZE 1024
@@ -34,7 +35,7 @@ class Server
 		int _epoll_fd;
 		const std::string _password;                                                                                            
 		std::map<int, Client*> _clientList;
-		//Channel _channels[];
+		std::map<std::string, Channel*> _channelList;
 
 		void acceptClient();
 		void handleClient(int fd);
@@ -51,6 +52,7 @@ class Server
 
 		void handleUser(Client* client, std::vector<std::string>& params);
 		void handleQuit(Client* client, std::vector<std::string>& params);
+		void handleKick(Client *client, std::vector<std::string> params);
 };
 
 enum command{
