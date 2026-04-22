@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Apr 21 15:20:14 2026
+# Make data base, printed on Wed Apr 22 08:58:08 2026
 
 # Variables
 
@@ -65,7 +65,7 @@ OLDPWD = /home/krepo
 # environment
 VSCODE_CODE_CACHE_PATH = /home/krepo/.var/app/com.visualstudio.code/config/Code/CachedData/41dd792b5e652393e7787322889ed5fdc58bd75b
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session8
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session9
 # environment
 LANG = C
 # environment
@@ -75,7 +75,7 @@ XAUTHORITY = /run/flatpak/Xauthority
 # default
 .INCLUDE_DIRS := /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.93
+GNOME_TERMINAL_SERVICE = :1.83
 # environment
 ALSA_CONFIG_DIR = /usr/share/alsa
 # makefile
@@ -96,7 +96,6 @@ SSH_AUTH_SOCK = /run/flatpak/ssh-auth
 .SHELLFLAGS := -c
 # environment
 XDG_CONFIG_DIRS = /app/etc/xdg:/etc/xdg
- 
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -114,7 +113,7 @@ ZSH = /home/krepo/.oh-my-zsh
 # environment
 VSCODE_PID = 22
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_6398_uHlptM
+KRB5CCNAME = FILE:/tmp/krb5cc_6398_zfHmVN
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -126,7 +125,7 @@ AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
 # environment
 XDG_DATA_HOME = /home/krepo/.var/app/com.visualstudio.code/data
 # environment
-SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/841006,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/841006
+SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/899465,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/899465
 # automatic
 *F = $(notdir $*)
 # environment
@@ -158,7 +157,7 @@ SANDBOX_LD_LIBRARY_PATH = /app/lib
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/139f3388_af63_4caf_bed6_e56c393c6918
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/c1fa2deb_5696_4649_b4f3_42a0b2ff21c6
 # environment
 MAKELEVEL := 0
 # default
@@ -173,6 +172,7 @@ MAKEFILES :=
 LANGUAGE = en
 # automatic
 ^F = $(notdir $^)
+ 
 # environment
 DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
 # makefile (from 'Makefile', line 18)
@@ -214,7 +214,7 @@ container = flatpak
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 841029
+SYSTEMD_EXEC_PID = 899494
 # makefile (from 'Makefile', line 5)
 RM = rm -rf
 # environment
@@ -318,7 +318,6 @@ obj/%.o: %.cpp
 #  recipe to execute (from 'Makefile', line 28):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
- 
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
 
 # 1 implicit rules, 0 (0.0%) terminal.
@@ -354,6 +353,7 @@ obj/parse.o: parse.cpp
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 28):
 		@mkdir -p $(dir $@)
+ 
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
 
@@ -525,8 +525,8 @@ obj/Server.d:
 #  File does not exist.
 #  File has been updated.
 #  Failed to be updated.
- 
 
+ 
 # Not a target:
 obj/Nick.d:
 #  Implicit rule search has been done.
@@ -643,6 +643,6 @@ Client.cpp:
 # strcache performance: lookups = 104 / hit rate = 49%
 # hash-table stats:
 # Load=53/8192=1%, Rehash=0, Collisions=0/104=0%
-# Finished Make data base on Tue Apr 21 15:20:14 2026
+# Finished Make data base on Wed Apr 22 08:58:08 2026
 
  
