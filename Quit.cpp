@@ -17,4 +17,6 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 	// PLACEHOLDER for notifiying other clients that share channels with the client whos quitting
 	// need to be done when JOIN command is built
 	// something like broadcastQuitToSharedChannels(client, reason);
+
+	removeClient(client->getFD());
 }
