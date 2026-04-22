@@ -68,6 +68,7 @@ static command	getCommands(std::string cmd){
 		case PRIVMSG:
 			break;
 		case PING:
+			handlePing(client, params);
 			break;
 		case KICK:
 			handleKick(client, params);
