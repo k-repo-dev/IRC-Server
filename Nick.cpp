@@ -6,7 +6,7 @@ void Server::checkRegistered(Client *client)
 	{
 		client->setRegistered(true);
 		sendToClient(client,
-			"001 " + client->getNick() + " :Welcome to the " + NETWORK_NAME + " Network, " + client->getNick() + "!" 
+			std::string(":") + SERVER_NAME + " 001 " + client->getNick() + " :Welcome to the " + NETWORK_NAME + " Network, " + client->getNick() + "!" 
 			+ client->getUserName() + "@" + HOST + "\r\n");
 	}
 }
@@ -34,21 +34,21 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 	if (!client->isPasswordValidated())
 	{
 		sendToClient(client,
-			"451 " + nick + " :You have not registered\r\n");
+			std::string(":") + SERVER_NAME + " 451 " + nick + " :You have not registered\r\n");
 		std::cout << "not registered\n";
 		return;
 	}
 	if (params.empty())
 	{
 		sendToClient(client,
-			"431 " + nick + " :No nickname given\r\n");
+			std::string(":") + SERVER_NAME + " 431 " + nick + " :No nickname given\r\n");
 		std::cout << "no nickname\n";
 		return;
 	}
 	if (params.size() > 1 || !isValidNick(params[0]))
 	{
 		sendToClient(client,
-			"432 " + nick + " " + params[0] + " :Erroneus nickname\r\n");
+			std::string(":") + SERVER_NAME + " 432 " + nick + " " + params[0] + " :Erroneus nickname\r\n");
 		std::cout << "wrong nickname\n";
 		return;
 	}
@@ -57,7 +57,7 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 		if (it->second->getNick() == params[0])
 		{
 			sendToClient(client,
-				"433 " + nick + " " + params[0] + " :Nickname is already in use\r\n");
+				std::string(":") + SERVER_NAME + " 433 " + nick + " " + params[0] + " :Nickname is already in use\r\n");
 			std::cout << "nick name in use\n";
 			return;
 		}

@@ -7,7 +7,7 @@ void Server::handleUser(Client* client, std::vector<std::string>& params)
 	if (client->isRegistered())
 	{
 		sendToClient(client,
-			":server 462 " + client->getNick() + " :You may not register\r\n");
+			std::string(":") + SERVER_NAME + " 462 " + client->getNick() + " :You may not register\r\n");
 		return;
 	}
 
@@ -17,7 +17,7 @@ void Server::handleUser(Client* client, std::vector<std::string>& params)
 	if (params.size() < 4 || params[0].empty())
 	{
 		sendToClient(client,
-			":server 461 * USER :Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 * USER :Not enough parameters\r\n");
 		return;
 	}
 
