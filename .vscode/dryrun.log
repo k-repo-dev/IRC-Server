@@ -1,4 +1,4 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/krepo/GITHUB/rank5/ft_irc'
 mkdir -p obj/
 c++ -Wall -Wextra -Werror -std=c++20 -MMD -MP -c main.cpp -o obj/main.o
@@ -24,7 +24,10 @@ echo "\033[0;33mCompiling: User.cpp\033[0m"
 mkdir -p obj/
 c++ -Wall -Wextra -Werror -std=c++20 -MMD -MP -c Channel.cpp -o obj/Channel.o
 echo "\033[0;33mCompiling: Channel.cpp\033[0m"
-c++ -Wall -Wextra -Werror -std=c++20 obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o obj/Nick.o obj/User.o obj/Channel.o -o ircserv
+mkdir -p obj/
+c++ -Wall -Wextra -Werror -std=c++20 -MMD -MP -c Quit.cpp -o obj/Quit.o
+echo "\033[0;33mCompiling: Quit.cpp\033[0m"
+c++ -Wall -Wextra -Werror -std=c++20 obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o obj/Nick.o obj/User.o obj/Channel.o obj/Quit.o -o ircserv
 echo "\033[0;32mSuccess: ircserv built.\033[0m"
 make: Leaving directory '/home/krepo/GITHUB/rank5/ft_irc'
  

@@ -9,10 +9,12 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 		reason += params[0];
 	
 	// acknowledging the client f receiving the QUIT command with an ERROR message
-	sendToClient(client,
+	std::string errorMsg =
 		"ERROR :Closing link: " + client->getNick()
 		+ "[" + client->getUserName() + "localhost] ("
-		+ reason + ")\r\n");
+		+ reason + ")\r\n";
+
+	send(client->getFD(), errorMsg.c_str(), errorMsg.size(), 0);
 
 	// PLACEHOLDER for notifiying other clients that share channels with the client whos quitting
 	// need to be done when JOIN command is built

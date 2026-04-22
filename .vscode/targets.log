@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed Apr 22 08:58:08 2026
+# Make data base, printed on Wed Apr 22 09:42:13 2026
 
 # Variables
 
@@ -83,7 +84,7 @@ MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/krepo/GITHUB/rank5/ft_irc
 # makefile (from 'Makefile', line 9)
-SRCS = main.cpp Server.cpp Client.cpp parse.cpp Pass.cpp Nick.cpp User.cpp Channel.cpp 
+SRCS = main.cpp Server.cpp Client.cpp parse.cpp Pass.cpp Nick.cpp User.cpp Channel.cpp Quit.cpp 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -126,6 +127,7 @@ AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
 XDG_DATA_HOME = /home/krepo/.var/app/com.visualstudio.code/data
 # environment
 SESSION_MANAGER = local/c2r5p9.hive.fi:@/tmp/.ICE-unix/899465,unix/c2r5p9.hive.fi:/tmp/.ICE-unix/899465
+ 
 # automatic
 *F = $(notdir $*)
 # environment
@@ -140,7 +142,7 @@ VSCODE_NLS_CONFIG = {"userLocale":"en-us","osLocale":"en","resolvedLanguage":"en
 __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS = /etc/egl/egl_external_platform.d:/usr/lib/x86_64-linux-gnu/GL/egl/egl_external_platform.d:/usr/share/egl/egl_external_platform.d
 # default
 MAKE_HOST := x86_64-unknown-linux-gnu
-# makefile (from 'Makefile', line 13)
+# makefile (from 'Makefile', line 14)
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
@@ -172,14 +174,13 @@ MAKEFILES :=
 LANGUAGE = en
 # automatic
 ^F = $(notdir $^)
- 
 # environment
 DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
-# makefile (from 'Makefile', line 18)
+# makefile (from 'Makefile', line 19)
 YELLOW = \033[0;33m
 # environment
 XDG_CONFIG_HOME = /home/krepo/.var/app/com.visualstudio.code/config
-# makefile (from 'Makefile', line 17)
+# makefile (from 'Makefile', line 18)
 GREEN = \033[0;32m
 # environment
 DOCKER_HOST = unix:///run/user/6398/docker.sock
@@ -205,6 +206,7 @@ LESS = -R
 DESKTOP_SESSION = ubuntu
 # environment
 GST_PLUGIN_SYSTEM_PATH = /app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/codecs-extra/lib/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0
+ 
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -235,7 +237,7 @@ PAGER = less
 BAT_THEME = Monokai Pro
 # environment
 _ = /usr/bin/make
-# makefile (from 'Makefile', line 19)
+# makefile (from 'Makefile', line 20)
 RESET = \033[0m
 # environment
 XDG_RUNTIME_DIR = /run/user/6398
@@ -267,7 +269,7 @@ FT_HOOK_PATHNAME = login-user.d
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
-# makefile (from 'Makefile', line 15)
+# makefile (from 'Makefile', line 16)
 DEPS = $(OBJS:.o=.d)
 # default
 SUFFIXES := 
@@ -303,6 +305,7 @@ GDMSESSION = ubuntu
 # Load=144/1024=14%, Rehash=0, Collisions=25/191=13%
 
 # Pattern-specific Variable Values
+ 
 
 # No pattern-specific variable values.
 
@@ -315,7 +318,7 @@ GDMSESSION = ubuntu
 # Implicit Rules
 
 obj/%.o: %.cpp
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
@@ -351,9 +354,8 @@ obj/parse.o: parse.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
- 
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
 
@@ -364,13 +366,14 @@ obj/Nick.o: Nick.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
 
 obj/main.o: main.cpp
 #  Implicit rule search has been done.
+ 
 #  Implicit/static pattern stem: 'main'
 #  File is an intermediate prerequisite.
 #  File is secondary (prerequisite of .SECONDARY).
@@ -395,7 +398,7 @@ obj/main.o: main.cpp
 # | := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=2/19=11%
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
@@ -412,7 +415,7 @@ Pass.cpp:
 Makefile:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-21 15:12:51.847268908
+#  Last modified 2026-04-22 09:34:23.743147777
 #  File has been updated.
 #  Successfully updated.
 
@@ -420,6 +423,7 @@ Makefile:
 Channel.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
+ 
 #  Last modified 2026-04-21 15:12:51.847268908
 #  File has been updated.
 #  Successfully updated.
@@ -431,7 +435,7 @@ obj/Client.o: Client.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
@@ -441,7 +445,7 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 37):
+#  recipe to execute (from 'Makefile', line 38):
 		$(RM) $(OBJ_DIR)
 		@echo "Objects removed."
 
@@ -463,7 +467,7 @@ re: fclean all
 Server.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-21 12:38:09.273954773
+#  Last modified 2026-04-22 09:33:45.628682954
 #  File has been updated.
 #  Successfully updated.
 
@@ -482,15 +486,23 @@ all: ircserv
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/7=0%
+ 
 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 41):
+#  recipe to execute (from 'Makefile', line 42):
 		$(RM) $(NAME)
 		@echo "Executable removed."
+
+# Not a target:
+obj/Quit.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
 
 # Not a target:
 main.cpp:
@@ -499,6 +511,18 @@ main.cpp:
 #  Last modified 2026-04-20 14:19:11.023599778
 #  File has been updated.
 #  Successfully updated.
+
+obj/Quit.o: Quit.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'Quit'
+#  File is an intermediate prerequisite.
+#  File is secondary (prerequisite of .SECONDARY).
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 29):
+		@mkdir -p $(dir $@)
+		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+		@echo "$(YELLOW)Compiling: $<$(RESET)"
 
 # Not a target:
 obj/Client.d:
@@ -514,7 +538,7 @@ obj/Pass.o: Pass.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
@@ -526,12 +550,12 @@ obj/Server.d:
 #  File has been updated.
 #  Failed to be updated.
 
- 
 # Not a target:
 obj/Nick.d:
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
+ 
 #  Failed to be updated.
 
 # Not a target:
@@ -546,11 +570,11 @@ Nick.cpp:
 parse.cpp:
 #  Implicit rule search has been done.
 #  File is secondary (prerequisite of .SECONDARY).
-#  Last modified 2026-04-21 15:03:31.939724958
+#  Last modified 2026-04-22 09:21:46.144940591
 #  File has been updated.
 #  Successfully updated.
 
-.SECONDARY: obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o obj/Nick.o obj/User.o obj/Channel.o
+.SECONDARY: obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o obj/Nick.o obj/User.o obj/Channel.o obj/Quit.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -569,10 +593,18 @@ obj/Server.o: Server.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
+
+# Not a target:
+Quit.cpp:
+#  Implicit rule search has been done.
+#  File is secondary (prerequisite of .SECONDARY).
+#  Last modified 2026-04-22 09:21:03.041269382
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 obj/Channel.d:
@@ -581,17 +613,18 @@ obj/Channel.d:
 #  File has been updated.
 #  Failed to be updated.
 
-ircserv: obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o obj/Nick.o obj/User.o obj/Channel.o
+ircserv: obj/main.o obj/Server.o obj/Client.o obj/parse.o obj/Pass.o obj/Nick.o obj/User.o obj/Channel.o obj/Quit.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/7=0%
-#  recipe to execute (from 'Makefile', line 24):
+#  recipe to execute (from 'Makefile', line 25):
 		$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 		@echo "$(GREEN)Success: $(NAME) built.$(RESET)"
 
+ 
 obj/User.o: User.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'User'
@@ -599,7 +632,7 @@ obj/User.o: User.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
@@ -611,7 +644,7 @@ obj/Channel.o: Channel.cpp
 #  File is secondary (prerequisite of .SECONDARY).
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 29):
 		@mkdir -p $(dir $@)
 		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
@@ -630,19 +663,19 @@ Client.cpp:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=34/1024=3%, Rehash=0, Collisions=6/103=6%
+# Load=37/1024=4%, Rehash=0, Collisions=6/112=5%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 53 / storage = 482 B / avg = 9 B
-# current buf: size = 8162 B / used = 482 B / count = 53 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 56 / storage = 509 B / avg = 9 B
+# current buf: size = 8162 B / used = 509 B / count = 56 / avg = 9 B
 
-# strcache performance: lookups = 104 / hit rate = 49%
+# strcache performance: lookups = 111 / hit rate = 49%
 # hash-table stats:
-# Load=53/8192=1%, Rehash=0, Collisions=0/104=0%
-# Finished Make data base on Wed Apr 22 08:58:08 2026
+# Load=56/8192=1%, Rehash=0, Collisions=0/111=0%
+# Finished Make data base on Wed Apr 22 09:42:13 2026
 
  
