@@ -70,6 +70,7 @@ static command	getCommands(std::string cmd){
 		case PING:
 			break;
 		case KICK:
+			handleKick(client, params);
 			break;
 		case INVITE:
 			break;
