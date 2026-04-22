@@ -45,8 +45,8 @@ Client* Channel::getMemberByNick(const std::string& nick) const
 {
 	for (auto it = _members.begin(); it != _members.end(); it++)
 	{
-		if (it->second->getNick() == nick)
-			return it->second;
+		if (it->second->getNick() == nick) //check nicks of all clients to see if it matches
+			return it->second; // return client object
 	}
 	return nullptr;
 }
