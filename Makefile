@@ -8,11 +8,7 @@ OBJ_DIR		= obj/
 
 SRCS		= main.cpp Server.cpp Client.cpp parse.cpp \
 				Pass.cpp Nick.cpp User.cpp Channel.cpp \
-<<<<<<< HEAD
-				Quit.cpp Kick.cpp \
-=======
-				Quit.cpp Ping.cpp \
->>>>>>> df47808 (Started working on the PING command.)
+				Quit.cpp Kick.cpp Ping.cpp \
 
 
 OBJS		= $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
