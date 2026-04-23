@@ -7,19 +7,19 @@ void Server::handlePass(Client *client, std::vector<std::string> params)
 	if (client->isRegistered())
 	{
 		sendToClient(client,
-			"462 " + nick + " :You may not reregister\r\n");
+			std::string(":") + SERVER_NAME + " 462 " + nick + " :You may not reregister\r\n");
 		return;
 	}
 	if (params.empty() || params.size() > 1)
 	{
 		sendToClient(client,
-			"461 " + nick + " PASS :Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 " + nick + " PASS :Not enough parameters\r\n");
 		return;
 	}
 	if (params[0] != _password)
 	{
 		sendToClient(client,
-			"464 " + nick + " :Password incorrect\r\n");
+			std::string(":") + SERVER_NAME + " 464 " + nick + " :Password incorrect\r\n");
 		return;
 	}
 	client->setPasswordValidated(true);

@@ -30,3 +30,23 @@ const std::string&	Channel::getKey(void) const{
 void	Channel::setKey(const std::string& key){
 	_key = key;
 }
+
+bool Channel::isMember(Client* client) const
+{
+	return _members.count(client->getFD()); // returns true if that client is in the channel
+}
+
+const std::unordered_map<int, Client*>& Channel::getMembers() const
+{
+	return _members;
+}
+
+Client* Channel::getMemberByNick(const std::string& nick) const
+{
+	for (auto it = _members.begin(); it != _members.end(); it++)
+	{
+		if (it->second->getNick() == nick) //check nicks of all clients to see if it matches
+			return it->second; // return client object
+	}
+	return nullptr;
+}
