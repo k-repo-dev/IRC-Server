@@ -1,6 +1,5 @@
 #include "Server.hpp"
 
-
 static std::vector<std::string> separateParams(const std::string& par){
 	std::string arg;
 	std::vector<std::string> params;
@@ -10,7 +9,6 @@ static std::vector<std::string> separateParams(const std::string& par){
 			params.push_back(arg);
 	}
 	return params;
-  
 }
 
 void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
@@ -21,7 +19,7 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 	}
 
 	std::map<std::string, Channel*>::iterator it = _channelList.find(chan);
-	if (it == _channelList.end()){
+	if (it == _channelList.end()){ //no existing channel
 		Channel* channel = new Channel(chan);
 		_channelList.insert({channel->getChannel(), channel});
 		channel->addMember(client);
@@ -32,12 +30,17 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 		std::cout << client->getNick() << " created and joined new channel " + chan + " \r\n";
 		
 	}
-	else{
+	else{ //channel exists
 		Channel* channel = it->second;
 		if (key != "" && channel->getKey() != key){
 			sendToClient(client, "475 " + client->getNick() + " " + chan + " :Bad channel key\r\n");
+			return ;
 		}
-
+		if (channel->isInviteOnly()){
+			// update logic after invite is implemented
+			sendToClient(client, "473 " + client->getNick() + " " + chan + " :Invite only channel\r\n");
+			return ;
+		}
 		if (!channel->isMember(client)){
 			channel->addMember(client);
 			sendToChannel(channel, ":" + client->getNick() + " JOIN :" + chan + "\r\n");

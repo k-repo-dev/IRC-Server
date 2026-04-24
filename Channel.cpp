@@ -80,3 +80,6 @@ bool Channel::isTopicRestricted(void) const
 {
 	return _topicRestricted;
 }
+bool	Channel::isInviteOnly(){
+	return _inviteOnly;
+}

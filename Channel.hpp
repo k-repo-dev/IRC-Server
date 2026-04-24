@@ -13,8 +13,8 @@ private:
 	std::string 		_topicSetter;
 	std::string 		_topicTime;
 	std::string 		_key;
-	//bool				_inviteOnly;
 	bool				_topicRestricted;
+	bool				_inviteOnly;
 	//uint32_t 			_userLimit;
 	std::unordered_map<int, Client*> _members;
 	std::unordered_set<int> _operators;
@@ -39,6 +39,7 @@ public:
 	const std::string& getTopicTime(void) const;
 	bool isTopicRestricted(void) const;
 	const std::string&	getChannel(void) const;
+	bool	isInviteOnly();
 };
 
 
