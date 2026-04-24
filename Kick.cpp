@@ -7,7 +7,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 	if (params.size() < 2) // needs at least channel and user to kick
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " :Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " KICK :Not enough parameters\r\n");
 		return;
 	}
 	std::string channelName = params[0];
