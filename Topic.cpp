@@ -26,4 +26,12 @@ void Server::handleTopic(Client* client, std::vector<std::string>& params)
 			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + "" + channelName + " :You're not on that channel\r\n");
 		return;
 	}
+	
+	if (params.size() == 1) // if the command only has channel name it's for viewing the topic
+	{
+		if (channel->getTopic().empty())
+			sendToClient(client,
+			std::string(":") + SERVER_NAME + " 331 " + client->getNick() + "" + channelName + " :No topic is set\r\n");
+	}
+	// if the command has channel name + topic it's for changing the topic
 }
