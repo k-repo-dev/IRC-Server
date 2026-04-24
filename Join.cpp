@@ -1,32 +1,73 @@
 #include "Server.hpp"
 
-void Server::handleJoin(Client* client, std::vector<std::string>& params){
 
-    if (!client->isRegistered()){
-        return;
-    }
-    if (params.empty()){
-        sendToClient(client, "461 JOIN: Not enough parameters\r\n");
-        return ;
-    }
-    std::map<std::string, Channel*>::iterator it = _channelList.find(params[0]);
-    if (it == _channelList.end()){
-        Channel* channel = new Channel(params[0]);
-        _channelList.insert({channel->getChannel(), channel});
-       // _channelList[params[0]] = new Channel(params[0]);
-        channel->addMember(client);
-        channel->addOperator(client);
-        sendToClient(client, client->getNick() + "created and joined new channel " + params[0] + " \r\n");
-        std::cout << client->getNick() << "created and joined new channel " + params[0] + " \r\n";
-        
-    }
-    else{
-        Channel* channel = it->second;
-        channel->addMember(client);
-        sendToClient(client, client->getNick() + " joined channel " + params[0] + " \r\n");
-        std::cout << client->getNick() << " joined channel " + params[0] + " \r\n";
-    }
+static std::vector<std::string> separateParams(const std::string& par){
+	std::string arg;
+	std::vector<std::string> params;
+	std::istringstream stream(par);
+	while (std::getline(stream, arg, ',')) {
+		if (!arg.empty())
+			params.push_back(arg);
+	}
+	return params;
+  
 }
+
+void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
+
+	if (chan[0] != '#'){
+		sendToClient(client, "403 " + client->getNick() + " " + chan + " :No such Channel\r\n");
+		return ;
+	}
+
+	std::map<std::string, Channel*>::iterator it = _channelList.find(chan);
+	if (it == _channelList.end()){
+		Channel* channel = new Channel(chan);
+		_channelList.insert({channel->getChannel(), channel});
+		channel->addMember(client);
+		channel->addOperator(client);
+		if (key != "")
+			channel->setKey(key);
+		sendToChannel(channel, ":" + client->getNick() + " JOIN :" + chan + "\r\n");
+		std::cout << client->getNick() << " created and joined new channel " + chan + " \r\n";
+		
+	}
+	else{
+		Channel* channel = it->second;
+		if (key != "" && channel->getKey() != key){
+			sendToClient(client, "475 " + client->getNick() + " " + chan + " :Bad channel key\r\n");
+		}
+
+		if (!channel->isMember(client)){
+			channel->addMember(client);
+			sendToChannel(channel, ":" + client->getNick() + " JOIN :" + chan + "\r\n");
+			std::cout << client->getNick() << "is joining channel " + chan + " \r\n";
+		}
+	}
+}
+void	Server::handleJoin(Client* client, std::vector<std::string>& params){
+
+	if (!client->isRegistered()){
+		return;
+	}
+	if (params.empty()){
+		sendToClient(client, "461 " + client->getNick() + " JOIN: Not enough parameters\r\n");
+		return ;
+	}
+	std::vector<std::string> channels = separateParams(params[0]);
+	std::vector<std::string> keys;
+	if (params.size() > 1)
+		keys = separateParams(params[1]);
+
+	for (size_t i = 0; i < channels.size(); i++){
+		std::string key = "";
+		if (i < keys.size())
+			key = keys[i];
+		joinChannel(client, channels[i], key);
+	}
+}
+
+
 
 
 /*ERR_NEEDMOREPARAMS (461)

@@ -194,3 +194,10 @@ void Server::removeClient(int fd)
 	std::cout << "Client fd=" << fd << " disconnected\n"; 
 }
 
+void Server::sendToChannel(Channel* channel, const std::string& msg){
+	for (std::unordered_map<int, Client*> :: const_iterator it = channel->getMembers().begin();
+		it!=channel->getMembers().end(); it++){
+			sendToClient(it->second, msg);
+	}
+}
+
