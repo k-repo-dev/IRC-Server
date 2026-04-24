@@ -51,6 +51,7 @@ class Server
 		void detectCommands(Client* client, const std::string&line);
 		void checkRegistered(Client *client);
 		void sendToChannel(Channel* channel, const std::string& msg);
+		Client* getClientByNick(const std::string&nick);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
 		void handleQuit(Client* client, std::vector<std::string>& params);
