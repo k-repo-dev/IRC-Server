@@ -2,8 +2,6 @@
 
 void Server::handleKick(Client *client, std::vector<std::string> params)
 {
-	std::string nick = client->getNick().empty() ? "*" : client->getNick();
-
 	if (params.size() < 2) // needs at least channel and user to kick
 	{
 		sendToClient(client,
@@ -11,7 +9,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 		return;
 	}
 	std::string channelName = params[0];
-	std::string reasonToKick = params.size() > 2 ? params[2] : nick;
+	std::string reasonToKick = params.size() > 2 ? params[2] : client->getNick();
 	if (_channelList.find(channelName) == _channelList.end()) // look for channel in map to see if it exists
 	{
 		sendToClient(client,
@@ -49,7 +47,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 			continue; // if we have several targets, we need to try to kick each one
 		}
 
-		std::string kickMess = ":" + nick + "!" + client->getUserName() + "@localhost KICK " + channelName + " " + kicked[i] + " :" + reasonToKick + "\r\n";
+		std::string kickMess = ":" + client->getNick() + "!" + client->getUserName() + "@localhost KICK " + channelName + " " + kicked[i] + " :" + reasonToKick + "\r\n";
 		const std::unordered_map<int, Client*>& members = channel->getMembers();
 		for (auto it = members.begin(); it != members.end(); it++)
 			sendToClient(it->second, kickMess);

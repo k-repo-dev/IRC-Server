@@ -2,12 +2,11 @@
 
 void Server::handleTopic(Client* client, std::vector<std::string>& params)
 {
-	std::string nick = client->getNick().empty() ? "*" : client->getNick();
 
 	if (params.empty())
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 461 " + nick + " TOPIC :Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " TOPIC :Not enough parameters\r\n");
 	}
 
 	std::string channelName = params[0];
