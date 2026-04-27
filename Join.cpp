@@ -40,7 +40,7 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 		channel->addOperator(client);
 		if (key != "")
 			channel->setKey(key);
-		sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + HOST + " JOIN " + channel->getChannel() + "\r\n");
+		sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " JOIN " + channel->getChannel() + "\r\n");
 		sendToClient(client,
 			std::string(":") + SERVER_NAME + " 353 " + client->getNick() + " = " + channel->getChannel() + " :" + memberList(channel) + "\r\n");
 		sendToClient(client,
