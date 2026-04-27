@@ -13,7 +13,6 @@ private:
 	std::string 		_topicSetter;
 	std::string 		_topicTime;
 	std::string 		_key;
-	bool				_inviteOnly;
 	std::unordered_set<int> _inviteList; // quick way to check if a specific fd is in the list
 	bool				_topicRestricted;
 	bool				_inviteOnly;
