@@ -1,6 +1,30 @@
 #include "Server.hpp"
 
-void Server::handleMode(Client* client, Channel* channel, std::vector<std::string>& params)
+void Server::handleMode(Client* client, std::vector<std::string>& params)
 {
-	
+	if (params.empty())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " MODE :Not enough parameters\r\n");
+		return;
+	}
+
+	std::string targetChannel = params[0];
+
+	if (_channelList.find(targetChannel) == _channelList.end())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + targetChannel + " :No such channelr\r\n");
+		return;
+	}
+
+	Channel* channel = _channelList[targetChannel];
+	if (!channel->isMember(client))
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + " " + targetChannel + " :You're not on that channel\r\n");
+			return;
+	}
+
+
 }
