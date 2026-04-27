@@ -65,6 +65,7 @@ static command	getCommands(std::string cmd){
 			handleJoin(client, params);
 			break;
 		case PART:
+			handlePart(client, params);
 			break;
 		case PRIVMSG:
 			break;

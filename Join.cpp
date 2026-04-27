@@ -4,6 +4,7 @@ static std::vector<std::string> separateParams(const std::string& par){
 	std::string arg;
 	std::vector<std::string> params;
 	std::istringstream stream(par);
+
 	while (std::getline(stream, arg, ',')) {
 		if (!arg.empty())
 			params.push_back(arg);
@@ -31,7 +32,6 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 		sendToClient(client, std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + chan + " :No such Channel\r\n");
 		return ;
 	}
-
 	std::map<std::string, Channel*>::iterator it = _channelList.find(chan);
 	if (it == _channelList.end()){ //no existing channel
 		Channel* channel = new Channel(chan);
@@ -40,7 +40,7 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 		channel->addOperator(client);
 		if (key != "")
 			channel->setKey(key);
-		sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@localhost JOIN " + channel->getChannel() + "\r\n");
+		sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + HOST + " JOIN " + channel->getChannel() + "\r\n");
 		sendToClient(client,
 			std::string(":") + SERVER_NAME + " 353 " + client->getNick() + " = " + channel->getChannel() + " :" + memberList(channel) + "\r\n");
 		sendToClient(client,
@@ -59,7 +59,7 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 		}
 		if (!channel->isMember(client)){
 			channel->addMember(client);
-			sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@localhost JOIN " + channel->getChannel() + "\r\n");
+			sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " JOIN " + channel->getChannel() + "\r\n");
 			if (!channel->getTopic().empty()){
 				sendToClient(client,
 				std::string(":") + SERVER_NAME + " 332 " + client->getNick() + " " + channel->getChannel() + " :" + channel->getTopic() + "\r\n");
@@ -74,10 +74,6 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 	}
 }
 void	Server::handleJoin(Client* client, std::vector<std::string>& params){
-
-	if (!client->isRegistered()){
-		return;
-	}
 	if (params.empty()){
 		sendToClient(client, std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " JOIN: Not enough parameters\r\n");
 		return ;
