@@ -32,6 +32,7 @@ public:
 
 	bool isMember(Client* client) const;
 	const std::unordered_map<int, Client*>& getMembers() const;
+	const std::unordered_set<int>& getOperators() const;
 	Client* getMemberByNick(const std::string& nick) const;
 	const std::string& getTopic(void) const;
 	void setTopic(const std::string& topic, const std::string& setter);
