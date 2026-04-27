@@ -50,12 +50,16 @@ class Server
 		bool isValidNick(const std::string& nick);
 		void detectCommands(Client* client, const std::string&line);
 		void checkRegistered(Client *client);
+		void sendToChannel(Channel* channel, const std::string& msg);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
 		void handleQuit(Client* client, std::vector<std::string>& params);
 		void handleKick(Client *client, std::vector<std::string> params);
 		void handlePing(Client* client, std::vector<std::string>& params);
 		void handleTopic(Client* client, std::vector<std::string>& params);
+		void handleJoin(Client* client, std::vector<std::string>& params);
+		void joinChannel(Client* client, std::string& chan, std::string& key);
+
 };
 
 enum command{

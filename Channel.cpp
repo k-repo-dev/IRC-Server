@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel(const std::string& channel): _channel(channel), _topic(""),_key(""), _topicSetter(""), _topicTime(""),_topicRestricted(false)/*, _inviteOnly(false),
+Channel::Channel(const std::string& channel): _channel(channel), _topic(""), _topicSetter(""), _topicTime(""), _key(""), _topicRestricted(false)/*, _inviteOnly(false),
 , _userLimit(0)*/{
 }
 
@@ -24,6 +24,10 @@ bool	Channel::isOperator(Client* client) const{
 	return _operators.find(client->getFD()) != _operators.end();
 }
 
+const std::string&	Channel::getChannel(void) const{
+	return _channel;
+}
+
 const std::string&	Channel::getKey(void) const{
 	return _key;
 }
@@ -39,6 +43,10 @@ bool Channel::isMember(Client* client) const
 const std::unordered_map<int, Client*>& Channel::getMembers() const
 {
 	return _members;
+}
+const std::unordered_set<int>& Channel::getOperators() const
+{
+	return _operators;
 }
 
 Client* Channel::getMemberByNick(const std::string& nick) const
@@ -75,4 +83,7 @@ const std::string& Channel::getTopicTime(void) const
 bool Channel::isTopicRestricted(void) const
 {
 	return _topicRestricted;
+}
+bool	Channel::isInviteOnly(){
+	return _inviteOnly;
 }

@@ -13,8 +13,8 @@ private:
 	std::string 		_topicSetter;
 	std::string 		_topicTime;
 	std::string 		_key;
-	//bool				_inviteOnly;
 	bool				_topicRestricted;
+	bool				_inviteOnly;
 	//uint32_t 			_userLimit;
 	std::unordered_map<int, Client*> _members;
 	std::unordered_set<int> _operators;
@@ -29,15 +29,18 @@ public:
 	bool isOperator(Client* client) const;
 	const std::string& getKey(void) const;
 	void setKey(const std::string& key);
+
 	bool isMember(Client* client) const;
 	const std::unordered_map<int, Client*>& getMembers() const;
+	const std::unordered_set<int>& getOperators() const;
 	Client* getMemberByNick(const std::string& nick) const;
 	const std::string& getTopic(void) const;
 	void setTopic(const std::string& topic, const std::string& setter);
 	const std::string& getTopicSetter(void) const;
 	const std::string& getTopicTime(void) const;
 	bool isTopicRestricted(void) const;
-
+	const std::string&	getChannel(void) const;
+	bool	isInviteOnly();
 };
 
 
