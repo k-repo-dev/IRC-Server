@@ -6,7 +6,7 @@ void Server::handlePing(Client* client, std::vector<std::string>& params)
 	if (params.empty())
 	{
 		sendToClient(client,
-			":server 461 " + client->getNick() + " :Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " PING :Not enough parameters\r\n");
 		return;
 	}
 
@@ -14,10 +14,10 @@ void Server::handlePing(Client* client, std::vector<std::string>& params)
 	if (params[0].empty())
 	{
 		sendToClient(client,
-			":server 409 " + client->getNick() + " :No origin specified\r\n");
+			std::string(":") + SERVER_NAME + " 409 " + client->getNick() + " :No origin specified\r\n");
 		return;
 	}
 
 	sendToClient(client,
-		":server PONG server :" + params[0] + "\r\n");
+		std::string(":") + SERVER_NAME + " PONG " + SERVER_NAME + " :" + params[0] + "\r\n");
 }

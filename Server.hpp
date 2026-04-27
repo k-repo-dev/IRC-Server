@@ -55,6 +55,7 @@ class Server
 		void handleQuit(Client* client, std::vector<std::string>& params);
 		void handleKick(Client *client, std::vector<std::string> params);
 		void handlePing(Client* client, std::vector<std::string>& params);
+		void handleTopic(Client* client, std::vector<std::string>& params);
 };
 
 enum command{

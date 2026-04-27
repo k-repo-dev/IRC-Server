@@ -4,15 +4,17 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <cstdint>
-
+#include <ctime>
 class Channel
 {
 private:
 	const std::string	_channel;
 	std::string			_topic;
+	std::string 		_topicSetter;
+	std::string 		_topicTime;
 	std::string 		_key;
 	//bool				_inviteOnly;
-	//bool				_topicRestricted;
+	bool				_topicRestricted;
 	//uint32_t 			_userLimit;
 	std::unordered_map<int, Client*> _members;
 	std::unordered_set<int> _operators;
@@ -30,6 +32,12 @@ public:
 	bool isMember(Client* client) const;
 	const std::unordered_map<int, Client*>& getMembers() const;
 	Client* getMemberByNick(const std::string& nick) const;
+	const std::string& getTopic(void) const;
+	void setTopic(const std::string& topic, const std::string& setter);
+	const std::string& getTopicSetter(void) const;
+	const std::string& getTopicTime(void) const;
+	bool isTopicRestricted(void) const;
+
 };
 
 
