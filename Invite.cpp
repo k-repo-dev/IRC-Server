@@ -15,7 +15,7 @@ void Server::handleInvite(Client *client, std::vector<std::string> params)
 	if (_channelList.find(channelName) == _channelList.end())
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 403 " + client->getNick() + "" + channelName + " :No such channel\r\n");
+			std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + channelName + " :No such channel\r\n");
 		return;
 	}
 
@@ -23,15 +23,21 @@ void Server::handleInvite(Client *client, std::vector<std::string> params)
 	if (!channel->isMember(client))
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + "" + channelName + " :You're not on that channel\r\n");
+			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + " " + channelName + " :You're not on that channel\r\n");
 		return;
 	}
 	if (channel->isInviteOnly() && !channel->isOperator(client))
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 482 " + client->getNick() + "" + channelName + " :You're not channel operator\r\n");
+			std::string(":") + SERVER_NAME + " 482 " + client->getNick() + " " + channelName + " :You're not channel operator\r\n");
 		return;
 	}
 
 	Client* target = getClientByNick(toBeInvited);
+	if (target == nullptr)
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 401 " + client->getNick() + " " + channelName + " :No such nick\r\n");
+		return;
+	}
 }
