@@ -1,5 +1,8 @@
 #include "Server.hpp"
 
+static void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments);
+
+
 void Server::handleMode(Client* client, std::vector<std::string>& params)
 {
 	if (params.empty())
@@ -26,5 +29,14 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 			return;
 	}
 
+	std::string modeChanges = params[1];
+	std::vector<std::string> arguments;
+	for (auto i = 2; i < params.size(); i++)
+		arguments.push_back(params[i]);
+	applyModeChanges(channel, modeChanges, arguments); 
+}
+
+static void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments)
+{
 
 }
