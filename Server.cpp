@@ -25,7 +25,7 @@ Server::Server(int port, const std::string& password)
 	
 	setNonBlocking(_server_fd);
 	
-	_epoll_fd = epoll_create1(EPOLL_CLOEXEC); // CHECK if fail
+	_epoll_fd = epoll_create1(EPOLL_CLOEXEC);
 	if (_epoll_fd < 0)
 		throw std::runtime_error("epoll_create1() failed");
 
@@ -78,9 +78,16 @@ void Server::runServer()
 
 void Server::acceptClient()
 {
-	int client_fd = accept(_server_fd, NULL, NULL); // CHECK IF FAIL / accept blocks here until a client connects
-	if (client_fd < 0)
+	int client_fd = accept(_server_fd, NULL, NULL); // accept blocks here until a client connects
+	if (client_fd == -1)
+	{
+		if (errno == EAGAIN || errno == EWOULDBLOCK) // no clients waiting
+			return;
+		if (errno == EINTR) // pressed ctrl + c
+			return;
+		std::cerr << "accept() failed\n";
 		return;
+	}
 
 	setNonBlocking(client_fd);
 
