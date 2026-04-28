@@ -52,9 +52,8 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 			sendToClient(client, std::string(":") + SERVER_NAME + " 475 " + client->getNick() + " " + chan + " :Bad channel key\r\n");
 			return ;
 		}
-		if (channel->isInviteOnly()){
-			// update logic after invite is implemented
-			sendToClient(client, std::string(":") + SERVER_NAME " 473 " + client->getNick() + " " + chan + " :Invite only channel\r\n");
+		if (channel->isInviteOnly() && !channel->isInvited(client)){
+			sendToClient(client, std::string(":") + SERVER_NAME + " 473 " + client->getNick() + " " + chan + " :Invite only channel\r\n");
 			return ;
 		}
 		if (!channel->isMember(client)){

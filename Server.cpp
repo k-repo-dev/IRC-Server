@@ -201,3 +201,13 @@ void Server::sendToChannel(Channel* channel, const std::string& msg){
 	}
 }
 
+Client* Server::getClientByNick(const std::string&nick) //see if a client is in the server
+{
+	for (auto it = _clientList.begin(); it != _clientList.end(); it++)
+	{
+		if (it->second->getNick() == nick) //check nicks of all clients to see if it matches
+			return it->second; // return client object
+	}
+	return nullptr;
+}
+

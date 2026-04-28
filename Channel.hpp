@@ -13,6 +13,7 @@ private:
 	std::string 		_topicSetter;
 	std::string 		_topicTime;
 	std::string 		_key;
+	std::unordered_set<int> _inviteList; // quick way to check if a specific fd is in the list
 	bool				_topicRestricted;
 	bool				_inviteOnly;
 	//uint32_t 			_userLimit;
@@ -40,7 +41,9 @@ public:
 	const std::string& getTopicTime(void) const;
 	bool isTopicRestricted(void) const;
 	const std::string&	getChannel(void) const;
-	bool	isInviteOnly();
+	bool isInviteOnly(void) const;
+	void addInvite(Client* client);
+	bool isInvited(Client* client) const;
 };
 
 
