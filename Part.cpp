@@ -40,5 +40,10 @@ void Server::handlePart(Client* client, std::vector<std::string>& params){
 		sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST 
 		+ " PART " + channel->getChannel() + reason + "\r\n");
 		channel->removeMember(client);
+		if (channel->getMembers().empty())
+		{
+			delete channel; // free channel object
+			_channelList.erase(channels[i]); // remove pointer from the map
+		}
 	}
 }
