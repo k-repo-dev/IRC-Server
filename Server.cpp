@@ -200,6 +200,13 @@ void Server::sendToChannel(Channel* channel, const std::string& msg){
 			sendToClient(it->second, msg);
 	}
 }
+void Server::sendToChannelOperators(Channel* channel, const std::string& msg){
+	for (std::unordered_map<int, Client*> :: const_iterator it = channel->getMembers().begin();
+		it!=channel->getMembers().end(); it++){
+			if (channel->isOperator(it->second))
+				sendToClient(it->second, msg);
+	}
+}
 
 Client* Server::getClientByNick(const std::string&nick) //see if a client is in the server
 {
