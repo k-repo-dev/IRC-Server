@@ -76,6 +76,7 @@ static command	getCommands(std::string cmd){
 			handleKick(client, params);
 			break;
 		case INVITE:
+			handleInvite(client, params);
 			break;
 		case TOPIC:
 			handleTopic(client, params);

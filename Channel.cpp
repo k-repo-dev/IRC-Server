@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel(const std::string& channel): _channel(channel), _topic(""), _topicSetter(""), _topicTime(""), _key(""), _topicRestricted(false)/*, _inviteOnly(false),
+Channel::Channel(const std::string& channel): _channel(channel), _topic(""), _topicSetter(""), _topicTime(""),_key(""), _topicRestricted(false), _inviteOnly(false) /*
 , _userLimit(0)*/{
 }
 
@@ -84,6 +84,17 @@ bool Channel::isTopicRestricted(void) const
 {
 	return _topicRestricted;
 }
-bool	Channel::isInviteOnly(){
+
+bool Channel::isInviteOnly(void) const
+{
 	return _inviteOnly;
+}
+
+void Channel::addInvite(Client* client)
+{
+	_inviteList.insert(client->getFD()); //store fd of the invited client
+}
+bool Channel::isInvited(Client* client) const
+{
+	return _inviteList.count(client->getFD()); // is that client in the invite list?
 }

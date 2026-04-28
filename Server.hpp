@@ -51,6 +51,7 @@ class Server
 		void detectCommands(Client* client, const std::string&line);
 		void checkRegistered(Client *client);
 		void sendToChannel(Channel* channel, const std::string& msg);
+		Client* getClientByNick(const std::string&nick);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
 		void handleQuit(Client* client, std::vector<std::string>& params);
@@ -60,7 +61,8 @@ class Server
 		void handleJoin(Client* client, std::vector<std::string>& params);
 		void joinChannel(Client* client, std::string& chan, std::string& key);
 		void handlePart(Client* client, std::vector<std::string>& params);
-
+    void handleInvite(Client *client, std::vector<std::string> params);
+  
 };
 
 enum command{
