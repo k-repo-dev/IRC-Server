@@ -40,3 +40,13 @@ static void applyModeChanges(Channel* channel, std::string modeChanges, std::vec
 {
 
 }
+
+void Channel::setInviteOnly(Channel* channel)
+{
+	channel->_inviteOnly = true;
+}
+
+void Channel::removeInviteOnly(Channel* channel)
+{
+	channel->_inviteOnly = false;
+}

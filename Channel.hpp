@@ -46,8 +46,8 @@ public:
 	bool				isInviteOnly(void) const;
 	void				addInvite(Client* client);
 	bool				isInvited(Client* client) const;
-	void				setInviteOnly();
-	void				removeInviteOnly();
+	void				setInviteOnly(Channel* channel);
+	void				removeInviteOnly(Channel* channel);
 
 };
 
