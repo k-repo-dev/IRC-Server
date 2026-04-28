@@ -2,7 +2,6 @@
 
 static void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments);
 
-
 void Server::handleMode(Client* client, std::vector<std::string>& params)
 {
 	if (params.empty())
@@ -38,7 +37,30 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 
 static void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments)
 {
+	struct parsedModes {char sign; char modeLetter; std::string args;};
+	char	sign = '+';
+	int		argIndex = 0;
+	std::string arg;
+	std::vector<parsedModes> list;
 
+	for (int i = 0; i < modeChanges.size(); i++)
+	{
+		if (modeChanges[i] == '+' || modeChanges[i] == '-')
+			sign = modeChanges[i];
+		else
+		{
+			if (modeChanges[i] == 'i' || modeChanges[i] == 't'
+				|| (sign == '-' && modeChanges[i] == 'k')
+				|| (sign == '-' && modeChanges[i] == 'l'))
+			{
+				arg = "";
+			}
+			else
+			{
+				arg = arguments[argIndex++];
+			}
+		}
+	}
 }
 
 void Channel::setInviteOnly(Channel* channel)
@@ -49,4 +71,14 @@ void Channel::setInviteOnly(Channel* channel)
 void Channel::removeInviteOnly(Channel* channel)
 {
 	channel->_inviteOnly = false;
+}
+
+void Channel::setTopicRestricted(Channel* channel)
+{
+	channel->_topicRestricted = true;
+}
+
+void Channel::removeTopicRestricted(Channel* channel)
+{
+	channel->_topicRestricted = false;
 }

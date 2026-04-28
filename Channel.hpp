@@ -48,6 +48,8 @@ public:
 	bool				isInvited(Client* client) const;
 	void				setInviteOnly(Channel* channel);
 	void				removeInviteOnly(Channel* channel);
+	void				setTopicRestricted(Channel* channel);
+	void				removeTopicRestricted(Channel* channel);
 
 };
 
