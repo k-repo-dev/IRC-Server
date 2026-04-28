@@ -1,5 +1,7 @@
 #include "Server.hpp"
 
+volatile bool g_running = true;
+
 Server::Server(int port, const std::string& password)
 	: _port(port), _server_fd(-1), _epoll_fd(-1), _password(password)
 {
@@ -55,7 +57,7 @@ Server::~Server()
 void Server::runServer()
 {
 	struct epoll_event events[MAX_EVENT];
-	while (true)
+	while (g_running)
 	{
 		int needAttention = epoll_wait(_epoll_fd, events, MAX_EVENT, -1);
 		for (int i = 0; i < needAttention; i++)
@@ -216,3 +218,7 @@ Client* Server::getClientByNick(const std::string&nick) //see if a client is in 
 	return nullptr;
 }
 
+void handle_sigint(int)
+{
+    g_running = false;
+}

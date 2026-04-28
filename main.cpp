@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "Server.hpp"
 
+
 int main(int ac, char *av[])
 {
     if ( ac != 3)
@@ -8,6 +9,7 @@ int main(int ac, char *av[])
         std::cerr << "Usage: ./ircserv <port> <password>\n";
         return 1;
     }
+    signal(SIGINT, handle_sigint);
     try {
         Server server(std::atoi(av[1]), av[2]);
         server.runServer();
