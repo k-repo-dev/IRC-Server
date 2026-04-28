@@ -43,6 +43,11 @@ Server::~Server()
 		close(it->first);
 		delete it->second;
 	}
+	for (std::map<std::string, Channel*>::iterator it = _channelList.begin();
+		it != _channelList.end(); ++it)
+	{
+		delete it->second;
+	}
 	close(_server_fd);
 	close(_epoll_fd);
 }
