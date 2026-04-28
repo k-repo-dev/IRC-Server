@@ -60,7 +60,9 @@ class Server
 		void handleTopic(Client* client, std::vector<std::string>& params);
 		void handleJoin(Client* client, std::vector<std::string>& params);
 		void joinChannel(Client* client, std::string& chan, std::string& key);
-		void handleInvite(Client *client, std::vector<std::string> params);
+		void handlePart(Client* client, std::vector<std::string>& params);
+    void handleInvite(Client *client, std::vector<std::string> params);
+  
 };
 
 enum command{
