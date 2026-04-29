@@ -1,7 +1,5 @@
 #include "Server.hpp"
 
-static void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments);
-
 void Server::handleMode(Client* client, std::vector<std::string>& params)
 {
 	if (params.empty())
@@ -35,7 +33,7 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 	applyModeChanges(channel, modeChanges, arguments); 
 }
 
-static void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments)
+void Server::applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments)
 {
 	struct parsedModes {char sign; char modeLetter; std::string args;};
 	char	sign = '+';
@@ -70,7 +68,43 @@ static void applyModeChanges(Channel* channel, std::string modeChanges, std::vec
 	// loop for applying the parsed modes
 	for (int i = 0; i < list.size(); i++)
 	{
-		// to be implemented
+		if (list[i].sign == '+')
+		{
+			switch (list[i].modeLetter)
+			{
+			case 'i':
+				channel->setInviteOnly(channel);
+				sendToChannel(channel,
+					"Invite only-mode set\r\n");
+				break;
+			case 't':
+				channel->setTopicRestricted(channel);
+				sendToChannel(channel,
+					"Topic restricted-mode set\r\n");
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (list[i].modeLetter)
+			{
+			case 'i':
+				channel->removeInviteOnly(channel);
+				sendToChannel(channel,
+					"Invite only-mode removed\r\n");
+				break;
+			case 't':
+				channel->removeTopicRestricted(channel);
+				sendToChannel(channel,
+					"Topic restricted-mode removed\r\n");
+				break;
+			default:
+				break;
+			}
+		}
+
 	}
 }
 

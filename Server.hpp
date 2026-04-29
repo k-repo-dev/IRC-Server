@@ -67,6 +67,7 @@ class Server
 		void privmsgToChannel(Client *client, std::string channel, bool op, std::string& msg);
 		void handleInvite(Client *client, std::vector<std::string> params);
 		void handleMode(Client* client, std::vector<std::string>& params);
+		void applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments);
 
 };
 
