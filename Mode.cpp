@@ -43,6 +43,7 @@ static void applyModeChanges(Channel* channel, std::string modeChanges, std::vec
 	std::string arg;
 	std::vector<parsedModes> list;
 
+	// parsing modes to apply
 	for (int i = 0; i < modeChanges.size(); i++)
 	{
 		if (modeChanges[i] == '+' || modeChanges[i] == '-')
@@ -55,11 +56,21 @@ static void applyModeChanges(Channel* channel, std::string modeChanges, std::vec
 			{
 				arg = "";
 			}
-			else
+			else if (argIndex < arguments.size())
 			{
 				arg = arguments[argIndex++];
 			}
+			else
+				continue;
+			
+			list.push_back({sign, modeChanges[i], arg});
 		}
+	}
+
+	// loop for applying the parsed modes
+	for (int i = 0; i < list.size(); i++)
+	{
+		// to be implemented
 	}
 }
 

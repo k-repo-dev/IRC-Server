@@ -87,11 +87,3 @@ enum command{
 	MODE,
 	DEFAULT,
 };
-
-enum mode{
-	I,
-	T,
-	K,
-	L,
-	O,
-};
