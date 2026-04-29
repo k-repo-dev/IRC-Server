@@ -43,7 +43,7 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 		if (target == nullptr)
 		{
 			sendToClient(client,
-				std::string(":") + SERVER_NAME + " 441 " + client->getNick() + " " + kicked[i] + "" + channelName + " :They aren't on that channel\r\n");
+				std::string(":") + SERVER_NAME + " 441 " + client->getNick() + " " + kicked[i] + " " + channelName + " :They aren't on that channel\r\n");
 			continue; // if we have several targets, we need to try to kick each one
 		}
 
@@ -52,5 +52,10 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 		for (auto it = members.begin(); it != members.end(); it++)
 			sendToClient(it->second, kickMess);
 		channel->removeMember(target);
+		if (channel->getMembers().empty())
+		{
+			delete channel; // free channel object
+			_channelList.erase(channelName); // remove pointer from the map
+		}
 	}
 }
