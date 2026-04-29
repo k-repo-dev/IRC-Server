@@ -28,21 +28,21 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 
 	std::string modeChanges = params[1];
 	std::vector<std::string> arguments;
-	for (auto i = 2; i < params.size(); i++)
+	for (size_t i = 2; i < params.size(); i++)
 		arguments.push_back(params[i]);
-	applyModeChanges(channel, modeChanges, arguments); 
+	applyModeChanges(client, channel, targetChannel, modeChanges, arguments); 
 }
 
-void Server::applyModeChanges(Channel* channel, std::string modeChanges, std::vector<std::string> arguments)
+void Server::applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments)
 {
 	struct parsedModes {char sign; char modeLetter; std::string args;};
 	char	sign = '+';
-	int		argIndex = 0;
+	size_t		argIndex = 0;
 	std::string arg;
 	std::vector<parsedModes> list;
 
 	// parsing modes to apply
-	for (int i = 0; i < modeChanges.size(); i++)
+	for (size_t i = 0; i < modeChanges.size(); i++)
 	{
 		if (modeChanges[i] == '+' || modeChanges[i] == '-')
 			sign = modeChanges[i];
@@ -65,22 +65,36 @@ void Server::applyModeChanges(Channel* channel, std::string modeChanges, std::ve
 		}
 	}
 
+	std::string modeStr = "";
+	std::string argStr = "";
+	char	lastSign = 0;
+
 	// loop for applying the parsed modes
-	for (int i = 0; i < list.size(); i++)
+	for (size_t i = 0; i < list.size(); i++)
 	{
+		// only appned sign when it changes
+		if (list[i].sign != lastSign)
+		{
+			modeStr += list[i].sign;
+			lastSign = list[i].sign;
+		}
+
+		// always append the mode letter
+		modeStr += list[i].modeLetter;
+
+		if (!list[i].args.empty())
+			argStr += (argStr.empty() ? "" : " ") + list[i].args;
+
+		// apply the actual change to the channel object
 		if (list[i].sign == '+')
 		{
 			switch (list[i].modeLetter)
 			{
 			case 'i':
 				channel->setInviteOnly(channel);
-				sendToChannel(channel,
-					"Invite only-mode set\r\n");
 				break;
 			case 't':
 				channel->setTopicRestricted(channel);
-				sendToChannel(channel,
-					"Topic restricted-mode set\r\n");
 				break;
 			default:
 				break;
@@ -92,19 +106,26 @@ void Server::applyModeChanges(Channel* channel, std::string modeChanges, std::ve
 			{
 			case 'i':
 				channel->removeInviteOnly(channel);
-				sendToChannel(channel,
-					"Invite only-mode removed\r\n");
 				break;
 			case 't':
 				channel->removeTopicRestricted(channel);
-				sendToChannel(channel,
-					"Topic restricted-mode removed\r\n");
 				break;
 			default:
 				break;
 			}
 		}
 
+	}
+
+	// send full MODE message to all on channel for applied mode changes
+	if (!modeStr.empty())
+	{
+		std::string msg = ":" + client->getNick() + "!" + client->getUserName()
+						+ "@" + HOST
+						+ " MODE " + channelName
+						+ " " + modeStr
+						+ (argStr.empty() ? "" : " " + argStr) + "\r\n";
+		sendToChannel(channel, msg);
 	}
 }
 
