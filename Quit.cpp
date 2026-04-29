@@ -13,7 +13,7 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 		reason += joined;
 	}
 
-	std::string announceQuit = ":" + client->getNick() + "!" + client->getUserName() + "@localhost QUIT :" + reason + "\r\n";
+	std::string announceQuit = ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " QUIT :" + reason + "\r\n";
 	for (auto it = _channelList.begin(); it != _channelList.end();)
 	{
 		Channel* channel = it->second;
