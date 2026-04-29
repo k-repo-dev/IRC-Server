@@ -52,6 +52,7 @@ class Server
 		void detectCommands(Client* client, const std::string&line);
 		void checkRegistered(Client *client);
 		void sendToChannel(Channel* channel, const std::string& msg);
+		void sendToChannelOperators(Channel* channel, const std::string& msg);
 		Client* getClientByNick(const std::string&nick);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
@@ -62,8 +63,10 @@ class Server
 		void handleJoin(Client* client, std::vector<std::string>& params);
 		void joinChannel(Client* client, std::string& chan, std::string& key);
 		void handlePart(Client* client, std::vector<std::string>& params);
-    	void handleInvite(Client *client, std::vector<std::string> params);
-  
+    void handleInvite(Client *client, std::vector<std::string> params);
+		void handlePrivmsg(Client *client, std::vector<std::string> params);
+		void privmsgToChannel(Client *client, std::string channel, bool op, std::string& msg);
+
 };
 
 void handle_sigint(int);

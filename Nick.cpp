@@ -13,7 +13,7 @@ void Server::checkRegistered(Client *client)
 
 bool Server::isValidNick(const std::string& nick)
 {
-	if (nick[0] == '#' || nick[0] == ':' || isdigit(nick[0]))
+	if (nick[0] == '#' || nick[0] == ':' || nick[0] == '@'|| isdigit(nick[0]))
 		return false;
 
 	for (size_t i = 0; i < nick.size(); i++)

@@ -68,6 +68,7 @@ static command	getCommands(std::string cmd){
 			handlePart(client, params);
 			break;
 		case PRIVMSG:
+			handlePrivmsg(client, params);
 			break;
 		case PING:
 			handlePing(client, params);
