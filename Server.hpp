@@ -15,8 +15,9 @@
 #include <vector>
 #include <sstream>
 #include "Channel.hpp"
+#include <signal.h>
 
-
+extern volatile bool g_running; // shared variable
 #define BUFFER_SIZE 1024
 #define MAX_EVENT 64
 #define NETWORK_NAME "Swifties Server"
@@ -62,12 +63,13 @@ class Server
 		void handleJoin(Client* client, std::vector<std::string>& params);
 		void joinChannel(Client* client, std::string& chan, std::string& key);
 		void handlePart(Client* client, std::vector<std::string>& params);
-    	void handleInvite(Client *client, std::vector<std::string> params);
+    void handleInvite(Client *client, std::vector<std::string> params);
 		void handlePrivmsg(Client *client, std::vector<std::string> params);
 		void privmsgToChannel(Client *client, std::string channel, bool op, std::string& msg);
 
-  
 };
+
+void handle_sigint(int);
 
 enum command{
 	NICK,

@@ -13,17 +13,30 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 		reason += joined;
 	}
 
-	// acknowledging the client f receiving the QUIT command with an ERROR message
+	std::string announceQuit = ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " QUIT :" + reason + "\r\n";
+	for (auto it = _channelList.begin(); it != _channelList.end();)
+	{
+		Channel* channel = it->second;
+		if (channel->isMember(client)) // check if the quitting client is in Channel
+		{
+			sendToChannel(channel, announceQuit); // send to everyone where that client was
+			channel->removeMember(client);
+			if (channel->getMembers().empty()) // was it the last member?
+			{
+				delete channel;
+				it = _channelList.erase(it); // point to next valid position and erase the channel from map
+				continue; // ignore the ++it after erase, because "it" is already pointing to next
+			}
+		}
+		it++; //advance the loop in the case the if condition is false
+	}
+
+	// acknowledging the client using QUIT command with an ERROR message
 	std::string errorMsg =
 		"ERROR :Closing link: " + client->getNick()
-		+ "[" + client->getUserName() + "localhost] ("
+		+ "[" + client->getUserName() + "@localhost] ("
 		+ reason + ")\r\n";
-
 	send(client->getFD(), errorMsg.c_str(), errorMsg.size(), 0);
 
-	// PLACEHOLDER for notifiying other clients that share channels with the client whos quitting
-	// need to be done when JOIN command is built
-	// something like broadcastQuitToSharedChannels(client, reason);
-
-	removeClient(client->getFD());
+	removeClient(client->getFD()); //remove client from server
 }
