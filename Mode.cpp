@@ -54,6 +54,17 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 			{
 				arg = "";
 			}
+			else if (modeChanges[i] == 'k' && sign == '+')
+			{
+				if (argIndex >= arguments.size() || arguments[argIndex].empty())
+				{
+					sendToClient(client,
+						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
+						+ " " + channelName + " k * :Key must not be empty\r\n");
+					continue;
+				}
+				arg = arguments[argIndex++];
+			}
 			else if (argIndex < arguments.size())
 			{
 				arg = arguments[argIndex++];
@@ -96,6 +107,9 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 			case 't':
 				channel->setTopicRestricted(channel);
 				break;
+			case 'k':
+				channel->setKey(list[i].args);
+				break;
 			default:
 				break;
 			}
@@ -109,6 +123,9 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 				break;
 			case 't':
 				channel->removeTopicRestricted(channel);
+				break;
+			case 'k':
+				channel->removeKey();
 				break;
 			default:
 				break;

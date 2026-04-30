@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <cstdint>
 #include <ctime>
+
 class Channel
 {
 private:
@@ -31,6 +32,7 @@ public:
 	bool				isOperator(Client* client) const;
 	const std::string&	getKey(void) const;
 	void				setKey(const std::string& key);
+	void				removeKey();
 	bool				isMember(Client* client) const;
 	
 	const std::unordered_map<int, Client*>& getMembers() const;

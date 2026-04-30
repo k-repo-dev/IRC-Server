@@ -35,6 +35,11 @@ void	Channel::setKey(const std::string& key){
 	_key = key;
 }
 
+void Channel::removeKey()
+{
+	_key = "";
+}
+
 bool Channel::isMember(Client* client) const
 {
 	return _members.count(client->getFD()); // returns true if that client is in the channel
