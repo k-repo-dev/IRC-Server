@@ -56,6 +56,13 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 			sendToClient(client, std::string(":") + SERVER_NAME + " 473 " + client->getNick() + " " + chan + " :Invite only channel\r\n");
 			return ;
 		}
+		if (channel->hasLimit() && (int)channel->getMembers().size() >= channel->getLimit())
+		{
+			sendToClient(client,
+				std::string(":") + SERVER_NAME + " 471 " +
+				client->getNick() + " " + chan + " :Cannot join channel(+l)\r\n");
+			return;
+		}
 		if (!channel->isMember(client)){
 			channel->addMember(client);
 			sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " JOIN " + channel->getChannel() + "\r\n");

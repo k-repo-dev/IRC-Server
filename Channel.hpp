@@ -17,7 +17,7 @@ private:
 	std::unordered_set<int> _inviteList; // quick way to check if a specific fd is in the list
 	bool				_topicRestricted;
 	bool				_inviteOnly;
-	//uint32_t 			_userLimit;
+	int		 			_limit;
 	std::unordered_map<int, Client*> _members;
 	std::unordered_set<int> _operators;
 	
@@ -33,6 +33,10 @@ public:
 	const std::string&	getKey(void) const;
 	void				setKey(const std::string& key);
 	void				removeKey();
+	void				setLimit(int limit);
+	void				removeLimit();
+	bool				hasLimit() const;
+	int					getLimit() const;
 	bool				isMember(Client* client) const;
 	
 	const std::unordered_map<int, Client*>& getMembers() const;

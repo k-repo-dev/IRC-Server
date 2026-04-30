@@ -65,6 +65,34 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 				}
 				arg = arguments[argIndex++];
 			}
+			else if (modeChanges[i] == 'l' && sign == '+')
+			{
+				if (argIndex >= arguments.size() || arguments[argIndex].empty())
+				{
+					sendToClient(client,
+						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
+						+ " " + channelName + " l * :Limit must not be empty\r\n");
+					continue;
+				}
+				std::string limitArg = arguments[argIndex];
+				bool valid = true;
+				for (size_t j = 0; j < limitArg.size(); j++)
+				{
+					if (!isdigit(limitArg[j]))
+					{
+						valid = false;
+						break;
+					}
+				}
+				if (!valid || std::atoi(limitArg.c_str()) <= 0)
+				{
+					sendToClient(client,
+						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
+						+ " " + channelName + " l * :Limit must be a positive integer\r\n");
+					continue;
+				}
+				arg = arguments[argIndex++];
+			}
 			else if (argIndex < arguments.size())
 			{
 				arg = arguments[argIndex++];
@@ -110,6 +138,9 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 			case 'k':
 				channel->setKey(list[i].args);
 				break;
+				case 'l':
+				channel->setLimit(std::atoi(list[i].args.c_str()));
+				break;
 			default:
 				break;
 			}
@@ -126,6 +157,9 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 				break;
 			case 'k':
 				channel->removeKey();
+				break;
+			case 'l':
+				channel->removeLimit();
 				break;
 			default:
 				break;
