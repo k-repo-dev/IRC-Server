@@ -48,7 +48,7 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 	}
 	else{ //channel exists
 		Channel* channel = it->second;
-		if (key != "" && channel->getKey() != key){
+		if (channel->getKey() != "" && channel->getKey() != key){
 			sendToClient(client, std::string(":") + SERVER_NAME + " 475 " + client->getNick() + " " + chan + " :Bad channel key\r\n");
 			return ;
 		}
