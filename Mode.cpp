@@ -25,7 +25,15 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + " " + targetChannel + " :You're not on that channel\r\n");
 			return;
 	}
-
+	if (!channel->isOperator(client))
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 482 " + client->getNick() 
+			+ " " + targetChannel + " :You're not channel operator\r\n");
+		return;
+	}
+	if (params.size() < 2)
+		return;
 	std::string modeChanges = params[1];
 	std::vector<std::string> arguments;
 	for (size_t i = 2; i < params.size(); i++)
@@ -93,6 +101,25 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 				}
 				arg = arguments[argIndex++];
 			}
+			else if (modeChanges[i] == 'o')
+			{
+				if (argIndex >= arguments.size() || arguments[argIndex].empty())
+				{
+					sendToClient(client,
+						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
+						+ " " + channelName + " o * :No target nick given\r\n");
+					continue;
+				}
+				std::string targetNick = arguments[argIndex];
+				if (!channel->getMemberByNick(targetNick))
+				{
+					sendToClient(client,
+						std::string(":") + SERVER_NAME + " 441 " + client->getNick()
+						+ " " + targetNick + " " + channelName + " :They aren't on that channel\r\n");
+					continue;
+				}
+				arg = arguments[argIndex++];
+			}
 			else if (argIndex < arguments.size())
 			{
 				arg = arguments[argIndex++];
@@ -129,40 +156,34 @@ void Server::applyModeChanges(Client* client, Channel* channel, std::string chan
 		{
 			switch (list[i].modeLetter)
 			{
-			case 'i':
-				channel->setInviteOnly(channel);
+			case 'i':	channel->setInviteOnly(channel); 					break;
+			case 't':	channel->setTopicRestricted(channel);				break;
+			case 'k':	channel->setKey(list[i].args);						break;
+			case 'l':	channel->setLimit(std::atoi(list[i].args.c_str()));	break;
+			case 'o':
+			{
+				Client* target = channel->getMemberByNick(list[i].args);
+				channel->addOperator(target);
 				break;
-			case 't':
-				channel->setTopicRestricted(channel);
-				break;
-			case 'k':
-				channel->setKey(list[i].args);
-				break;
-				case 'l':
-				channel->setLimit(std::atoi(list[i].args.c_str()));
-				break;
-			default:
-				break;
+			}
+			default:	break;
 			}
 		}
 		else
 		{
 			switch (list[i].modeLetter)
 			{
-			case 'i':
-				channel->removeInviteOnly(channel);
+			case 'i':	channel->removeInviteOnly(channel);			break;
+			case 't':	channel->removeTopicRestricted(channel);	break;
+			case 'k':	channel->removeKey();						break;
+			case 'l':	channel->removeLimit();						break;
+			case 'o':
+			{
+				Client* target = channel->getMemberByNick(list[i].args);
+				channel->removeOperator(target);
 				break;
-			case 't':
-				channel->removeTopicRestricted(channel);
-				break;
-			case 'k':
-				channel->removeKey();
-				break;
-			case 'l':
-				channel->removeLimit();
-				break;
-			default:
-				break;
+			}
+			default:	break;
 			}
 		}
 
