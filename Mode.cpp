@@ -14,7 +14,7 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 	if (_channelList.find(targetChannel) == _channelList.end())
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + targetChannel + " :No such channel\r\n");
+			std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + targetChannel + " :No such channelr\r\n");
 		return;
 	}
 
@@ -34,107 +34,14 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 	}
 	if (params.size() < 2)
 		return;
-	std::vector<std::string> arguments(params.begin() + 2, params.end());
-
-	std::vector<ParsedMode> list = parseModeString(client, channel, targetChannel, params[1], arguments);
-	applyParsedModes(client, channel, targetChannel, list);
-	/*std::string modeChanges = params[1];
+	std::string modeChanges = params[1];
 	std::vector<std::string> arguments;
 	for (size_t i = 2; i < params.size(); i++)
 		arguments.push_back(params[i]);
-	applyModeChanges(client, channel, targetChannel, modeChanges, arguments);*/ 
+	applyModeChanges(client, channel, targetChannel, modeChanges, arguments); 
 }
 
-std::vector<ParsedMode> Server::parseModeString(
-	Client* client,
-	Channel* channel,
-	const std::string& channelName,
-	const std::string& modeChanges,
-	const std::vector<std::string>& arguments)
-{
-	std::vector<ParsedMode> list;
-	char sign = '+';
-	size_t argIndex = 0;
-
-	for (size_t i = 0; i < modeChanges.size(); i++)
-	{
-		if (modeChanges[i] == '+' || modeChanges[i] == '-')
-		{
-			sign = modeChanges[i];
-			continue;
-		}
-		char m = modeChanges[i];
-		std::string arg;
-		if (m == 'i' || m == 't'
-			|| sign == '-' && m == 'k'
-			|| sign == '-' && m == 'l')
-		{
-			arg = "";
-		}
-		else if (m == 'k' && sign == '+')
-		{
-			if (argIndex >= arguments.size() || arguments[argIndex].empty())
-			{
-				sendToClient(client,
-					std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-					+ " " + channelName + " k * :Key must not be empty\r\n");
-				continue;
-			}
-			arg = arguments[argIndex++];
-		}
-		else if (m == 'l' && sign == '+')
-		{
-			if (argIndex >= arguments.size() || arguments[argIndex].empty())
-			{
-				sendToClient(client,
-					std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-					+ " " + channelName + " l * :Limit must not be empty\r\n");
-				continue;
-			}
-			const std::string& limitArg = arguments[argIndex];
-			bool valid = !limitArg.empty();
-			for (size_t j = 0; j < limitArg.size(); j++)
-				valid = isdigit(limitArg[j]);
-			if (!valid || std::atoi(limitArg.c_str()) <= 0)
-			{
-				sendToClient(client,
-					std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-					+ " " + channelName + " l * :Limit must be a positive integer\r\n");
-				continue;
-			}
-			arg = arguments[argIndex++];
-		}
-		else if (m == 'o')
-		{
-			if (argIndex >= arguments.size() || arguments[argIndex].empty())
-			{
-				sendToClient(client,
-					std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-					+ " " + channelName + " o * :No target nick given\r\n");
-				continue;
-			}
-			if (!channel->getMemberByNick(arguments[argIndex]))
-			{
-				sendToClient(client,
-					std::string(":") + SERVER_NAME + " 441 " + client->getNick() + " "
-					+ arguments[argIndex] + " " + channelName + " o * :No target nick given\r\n");
-				continue;
-			}
-			arg = arguments[argIndex++];
-		}
-		else 
-		{
-			if (argIndex < arguments.size())
-				arg = arguments[argIndex++];
-			else
-				continue;
-		}
-		list.push_back({sign, m, arg});
-	}
-	return list;
-}
-
-/*void Server::applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments)
+void Server::applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments)
 {
 	struct parsedModes {char sign; char modeLetter; std::string args;};
 	char	sign = '+';
@@ -292,7 +199,7 @@ std::vector<ParsedMode> Server::parseModeString(
 						+ (argStr.empty() ? "" : " " + argStr) + "\r\n";
 		sendToChannel(channel, msg);
 	}
-}*/
+}
 
 void Channel::setInviteOnly(Channel* channel)
 {
