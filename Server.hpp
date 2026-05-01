@@ -68,6 +68,8 @@ class Server
 		void handleInvite(Client *client, std::vector<std::string> params);
 		void handleMode(Client* client, std::vector<std::string>& params);
 		void applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments);
+		std::vector<ParsedMode> parseModeString(Client* client, Channel* channel, const std::string& channelName, const std::string& modeChanges, const std::vector<std::string>& arguments);
+		void applyParsedModes(Client* client, Channel* channel, const std::string& channelName, const std::vector<ParsedMode>& list);
 
 };
 
@@ -88,3 +90,5 @@ enum command{
 	MODE,
 	DEFAULT,
 };
+
+struct ParsedMode { char sign; char modeLetter; std::string arg; };
