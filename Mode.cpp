@@ -134,6 +134,76 @@ std::vector<ParsedMode> Server::parseModeString(
 	return list;
 }
 
+void Server::applyParsedModes(
+	Client *client,
+	Channel* channel,
+	const std::string& channelName,
+	const std::vector<ParsedMode>& list)
+{
+	std::string modeStr;
+	std::string argStr;
+	char lastSign = 0;
+
+	for (size_t i = 0; i < list.size(); i++)
+	{
+		if (list[i].sign != lastSign)
+		{
+			modeStr += list[i].sign;
+			lastSign = list[i].sign;
+		}
+		modeStr += list[i].modeLetter;
+
+		if (!list[i].arg.empty())
+			argStr += (argStr.empty() ? "" : " ") + list[i].arg;
+		
+		if (list[i].sign == '+')
+		{
+			switch (list[i].modeLetter)
+			{
+				case 'i': channel->setInviteOnly(channel);	break;
+				case 't': channel->setTopicRestricted(channel);	break;
+				case 'k': channel->setKey(list[i].arg);	break;
+				case 'l': channel->setLimit(std::atoi(list[i].arg.c_str()));	break;
+				case 'o':
+				{
+					Client* target = channel->getMemberByNick(list[i].arg);
+					if (target)
+						channel->addOperator(target);
+					break;
+				}
+				default:	break;
+			}
+		}
+		else
+		{
+			switch (list[i].modeLetter)
+			{
+			case 'i': channel->removeInviteOnly(channel);	break;
+			case 't': channel->removeTopicRestricted(channel);	break;
+			case 'k': channel->removeKey();	break;
+			case 'l': channel->removeLimit();	break;
+			case 'o':
+			{
+					Client* target = channel->getMemberByNick(list[i].arg);
+					if (target)
+						channel->removeOperator(target);
+					break;
+				}
+			default:	break;
+			}
+		}
+	}
+
+	if (!modeStr.empty())
+	{
+		std::string msg = ":" + client->getNick() + "!" + client->getUserName()
+						+ "@" + HOST
+						+ " MODE " + channelName
+						+ " " + modeStr
+						+ (argStr.empty() ? "" : " " + argStr) + "\r\n";
+		sendToChannel(channel, msg);
+	}
+}
 /*void Server::applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments)
 {
 	struct parsedModes {char sign; char modeLetter; std::string args;};
