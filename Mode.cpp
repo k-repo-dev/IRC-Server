@@ -25,6 +25,11 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 			std::string(":") + SERVER_NAME + " 442 " + client->getNick() + " " + targetChannel + " :You're not on that channel\r\n");
 			return;
 	}
+	if (params.size() < 2)
+	{
+		sendChannelModes(client, channel, targetChannel);
+		return;
+	}
 	if (!channel->isOperator(client))
 	{
 		sendToClient(client,
@@ -32,20 +37,9 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 			+ " " + targetChannel + " :You're not channel operator\r\n");
 		return;
 	}
-	if (params.size() < 2)
-	{
-		sendChannelModes(client, channel, targetChannel);
-		return;
-	}
 	std::vector<std::string> arguments(params.begin() + 2, params.end());
-
 	std::vector<ParsedMode> list = parseModeString(client, channel, targetChannel, params[1], arguments);
 	applyParsedModes(client, channel, targetChannel, list);
-	/*std::string modeChanges = params[1];
-	std::vector<std::string> arguments;
-	for (size_t i = 2; i < params.size(); i++)
-		arguments.push_back(params[i]);
-	applyModeChanges(client, channel, targetChannel, modeChanges, arguments);*/ 
 }
 
 std::vector<ParsedMode> Server::parseModeString(
