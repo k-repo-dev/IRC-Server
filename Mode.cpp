@@ -33,7 +33,10 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 		return;
 	}
 	if (params.size() < 2)
+	{
+		sendChannelModes(client, channel, targetChannel);
 		return;
+	}
 	std::vector<std::string> arguments(params.begin() + 2, params.end());
 
 	std::vector<ParsedMode> list = parseModeString(client, channel, targetChannel, params[1], arguments);
@@ -66,8 +69,8 @@ std::vector<ParsedMode> Server::parseModeString(
 		char m = modeChanges[i];
 		std::string arg;
 		if (m == 'i' || m == 't'
-			|| sign == '-' && m == 'k'
-			|| sign == '-' && m == 'l')
+			|| (sign == '-' && m == 'k')
+			|| (sign == '-' && m == 'l'))
 		{
 			arg = "";
 		}
@@ -204,165 +207,33 @@ void Server::applyParsedModes(
 		sendToChannel(channel, msg);
 	}
 }
-/*void Server::applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments)
+
+void Server::sendChannelModes(Client* client, Channel* channel, const std::string& channelName)
 {
-	struct parsedModes {char sign; char modeLetter; std::string args;};
-	char	sign = '+';
-	size_t		argIndex = 0;
-	std::string arg;
-	std::vector<parsedModes> list;
+	std::string modeStr = "+";
+	std::string argStr;
 
-	// parsing modes to apply
-	for (size_t i = 0; i < modeChanges.size(); i++)
+	if (channel->isInviteOnly())
+		modeStr += "i";
+	if (channel->isTopicRestricted())
+		modeStr += "t";
+	if (channel->hasKey())
 	{
-		if (modeChanges[i] == '+' || modeChanges[i] == '-')
-			sign = modeChanges[i];
-		else
-		{
-			if (modeChanges[i] == 'i' || modeChanges[i] == 't'
-				|| (sign == '-' && modeChanges[i] == 'k')
-				|| (sign == '-' && modeChanges[i] == 'l'))
-			{
-				arg = "";
-			}
-			else if (modeChanges[i] == 'k' && sign == '+')
-			{
-				if (argIndex >= arguments.size() || arguments[argIndex].empty())
-				{
-					sendToClient(client,
-						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-						+ " " + channelName + " k * :Key must not be empty\r\n");
-					continue;
-				}
-				arg = arguments[argIndex++];
-			}
-			else if (modeChanges[i] == 'l' && sign == '+')
-			{
-				if (argIndex >= arguments.size() || arguments[argIndex].empty())
-				{
-					sendToClient(client,
-						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-						+ " " + channelName + " l * :Limit must not be empty\r\n");
-					continue;
-				}
-				std::string limitArg = arguments[argIndex];
-				bool valid = true;
-				for (size_t j = 0; j < limitArg.size(); j++)
-				{
-					if (!isdigit(limitArg[j]))
-					{
-						valid = false;
-						break;
-					}
-				}
-				if (!valid || std::atoi(limitArg.c_str()) <= 0)
-				{
-					sendToClient(client,
-						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-						+ " " + channelName + " l * :Limit must be a positive integer\r\n");
-					continue;
-				}
-				arg = arguments[argIndex++];
-			}
-			else if (modeChanges[i] == 'o')
-			{
-				if (argIndex >= arguments.size() || arguments[argIndex].empty())
-				{
-					sendToClient(client,
-						std::string(":") + SERVER_NAME + " 696 " + client->getNick()
-						+ " " + channelName + " o * :No target nick given\r\n");
-					continue;
-				}
-				std::string targetNick = arguments[argIndex];
-				if (!channel->getMemberByNick(targetNick))
-				{
-					sendToClient(client,
-						std::string(":") + SERVER_NAME + " 441 " + client->getNick()
-						+ " " + targetNick + " " + channelName + " :They aren't on that channel\r\n");
-					continue;
-				}
-				arg = arguments[argIndex++];
-			}
-			else if (argIndex < arguments.size())
-			{
-				arg = arguments[argIndex++];
-			}
-			else
-				continue;
-			
-			list.push_back({sign, modeChanges[i], arg});
-		}
+		modeStr += "k";
+		argStr += (argStr.empty() ? "" : " ") + channel->getKey();
+	}
+	if (channel->hasLimit())
+	{
+		modeStr += "l";
+		argStr += (argStr.empty() ? "" : " ") + std::to_string(channel->getLimit());
 	}
 
-	std::string modeStr = "";
-	std::string argStr = "";
-	char	lastSign = 0;
-
-	// loop for applying the parsed modes
-	for (size_t i = 0; i < list.size(); i++)
-	{
-		// only appned sign when it changes
-		if (list[i].sign != lastSign)
-		{
-			modeStr += list[i].sign;
-			lastSign = list[i].sign;
-		}
-
-		// always append the mode letter
-		modeStr += list[i].modeLetter;
-
-		if (!list[i].args.empty())
-			argStr += (argStr.empty() ? "" : " ") + list[i].args;
-
-		// apply the actual change to the channel object
-		if (list[i].sign == '+')
-		{
-			switch (list[i].modeLetter)
-			{
-			case 'i':	channel->setInviteOnly(channel); 					break;
-			case 't':	channel->setTopicRestricted(channel);				break;
-			case 'k':	channel->setKey(list[i].args);						break;
-			case 'l':	channel->setLimit(std::atoi(list[i].args.c_str()));	break;
-			case 'o':
-			{
-				Client* target = channel->getMemberByNick(list[i].args);
-				channel->addOperator(target);
-				break;
-			}
-			default:	break;
-			}
-		}
-		else
-		{
-			switch (list[i].modeLetter)
-			{
-			case 'i':	channel->removeInviteOnly(channel);			break;
-			case 't':	channel->removeTopicRestricted(channel);	break;
-			case 'k':	channel->removeKey();						break;
-			case 'l':	channel->removeLimit();						break;
-			case 'o':
-			{
-				Client* target = channel->getMemberByNick(list[i].args);
-				channel->removeOperator(target);
-				break;
-			}
-			default:	break;
-			}
-		}
-
-	}
-
-	// send full MODE message to all on channel for applied mode changes
-	if (!modeStr.empty())
-	{
-		std::string msg = ":" + client->getNick() + "!" + client->getUserName()
-						+ "@" + HOST
-						+ " MODE " + channelName
-						+ " " + modeStr
-						+ (argStr.empty() ? "" : " " + argStr) + "\r\n";
-		sendToChannel(channel, msg);
-	}
-}*/
+	sendToClient(client,
+		std::string(":") + SERVER_NAME + " 324 " + client->getNick()
+		+ " " + channelName
+		+ " " + modeStr
+		+ (argStr.empty() ? "" : " " + argStr) + "\r\n");
+}
 
 void Channel::setInviteOnly(Channel* channel)
 {

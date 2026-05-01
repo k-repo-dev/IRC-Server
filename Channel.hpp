@@ -32,6 +32,7 @@ public:
 	bool				isOperator(Client* client) const;
 	const std::string&	getKey(void) const;
 	void				setKey(const std::string& key);
+	bool				hasKey() const;
 	void				removeKey();
 	void				setLimit(int limit);
 	void				removeLimit();

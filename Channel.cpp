@@ -35,6 +35,11 @@ void	Channel::setKey(const std::string& key){
 	_key = key;
 }
 
+bool	Channel::hasKey() const
+{
+	return !_key.empty();
+}
+
 void Channel::removeKey()
 {
 	_key = "";
