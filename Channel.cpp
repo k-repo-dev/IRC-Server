@@ -1,7 +1,7 @@
 #include "Channel.hpp"
 
-Channel::Channel(const std::string& channel): _channel(channel), _topic(""), _topicSetter(""), _topicTime(""),_key(""), _topicRestricted(false), _inviteOnly(false) /*
-, _userLimit(0)*/{
+Channel::Channel(const std::string& channel): _channel(channel), _topic(""), _topicSetter(""), _topicTime(""),_key(""), _topicRestricted(false), _inviteOnly(false),
+ _limit(0){
 }
 
 Channel::~Channel()
@@ -33,6 +33,36 @@ const std::string&	Channel::getKey(void) const{
 }
 void	Channel::setKey(const std::string& key){
 	_key = key;
+}
+
+bool	Channel::hasKey() const
+{
+	return !_key.empty();
+}
+
+void Channel::removeKey()
+{
+	_key = "";
+}
+
+void Channel::setLimit(int limit)
+{
+	_limit = limit;
+}
+
+void Channel::removeLimit()
+{
+	_limit = 0;
+}
+
+bool Channel::hasLimit() const
+{
+	return _limit > 0;
+}
+
+int Channel::getLimit() const
+{
+	return _limit;
 }
 
 bool Channel::isMember(Client* client) const

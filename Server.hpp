@@ -24,6 +24,8 @@ extern volatile bool g_running; // shared variable
 #define SERVER_NAME "swifties.local"
 #define HOST "localhost"
 
+struct ParsedMode { char sign; char modeLetter; std::string arg; };
+
 class Server
 {
 	public:
@@ -63,9 +65,13 @@ class Server
 		void handleJoin(Client* client, std::vector<std::string>& params);
 		void joinChannel(Client* client, std::string& chan, std::string& key);
 		void handlePart(Client* client, std::vector<std::string>& params);
-    void handleInvite(Client *client, std::vector<std::string> params);
 		void handlePrivmsg(Client *client, std::vector<std::string> params);
 		void privmsgToChannel(Client *client, std::string channel, bool op, std::string& msg);
+		void handleInvite(Client *client, std::vector<std::string> params);
+		void handleMode(Client* client, std::vector<std::string>& params);
+		std::vector<ParsedMode> parseModeString(Client* client, Channel* channel, const std::string& channelName, const std::string& modeChanges, const std::vector<std::string>& arguments);
+		void applyParsedModes(Client* client, Channel* channel, const std::string& channelName, const std::vector<ParsedMode>& list);
+		void sendChannelModes(Client* client, Channel* channel, const std::string& channelName);
 
 };
 
@@ -86,4 +92,3 @@ enum command{
 	MODE,
 	DEFAULT,
 };
-

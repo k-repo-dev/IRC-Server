@@ -83,6 +83,7 @@ static command	getCommands(std::string cmd){
 			handleTopic(client, params);
 			break;
 		case MODE:
+			handleMode(client, params);
 			break;
 		default:
 			std::cout << "no command\n";
