@@ -65,7 +65,7 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 	
 	std::string oldNick = nick; // save the old nick or * if not set
 	client->setNick(params[0]);
-	sendToClient(client,
+	sendToUnique(client,
 		":" + oldNick + " NICK " + params[0] + "\r\n");// success message
 	std::cout << "nickname is " + params[0] + '\n';
 	checkRegistered(client);

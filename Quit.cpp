@@ -19,7 +19,7 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 		Channel* channel = it->second;
 		if (channel->isMember(client)) // check if the quitting client is in Channel
 		{
-			sendToChannel(channel, announceQuit); // send to everyone where that client was
+			//sendToChannel(channel, announceQuit); // send to everyone where that client was
 			channel->removeMember(client);
 			if (channel->getMembers().empty()) // was it the last member?
 			{
@@ -30,7 +30,7 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 		}
 		it++; //advance the loop in the case the if condition is false
 	}
-
+	sendToUnique(client, announceQuit);
 	// acknowledging the client using QUIT command with an ERROR message
 	std::string errorMsg =
 		"ERROR :Closing link: " + client->getNick()
