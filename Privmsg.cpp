@@ -17,7 +17,10 @@ void Server::privmsgToChannel(Client *client, std::string channel, bool op, std:
 		sendToClient(client, std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + channel + " :No such channel\r\n");
 	else {
 		if (!it->second->isMember(client))
+		{
 			sendToClient(client, std::string(":") + SERVER_NAME + " 404 " + client->getNick() + " " + it->second->getChannel() + " :Cannot send to channel\r\n");
+			return ;
+		}
 		if (op == true){
 			if (!it->second->isOperator(client))
 				sendToClient(client,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " +  it->second->getChannel() + " " + msg + "\r\n");
@@ -59,7 +62,6 @@ void Server::handlePrivmsg(Client *client, std::vector<std::string> params){
 				sendToClient(client, std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + targets[i] + " :No such nick\r\n");
 				continue ;
 			}
-			sendToClient(client,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " + target->getNick() + " "+ msg + "\r\n");
 			sendToClient(target,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " + target->getNick() + " "+ msg + "\r\n");
 	}
 	}
