@@ -221,6 +221,7 @@ void Server::sendToChannelOperators(Channel* channel, const std::string& msg){
 				sendToClient(it->second, msg);
 	}
 }
+
 void Server::sendToUnique(Client* client, const std::string& msg){
 	std::unordered_map<int, Client*> uniqMembers;
 	for (std::map<std::string, Channel*> :: const_iterator ch = _channelList.begin();
@@ -234,7 +235,6 @@ void Server::sendToUnique(Client* client, const std::string& msg){
 			}
 		}
 	}
-
 	for (std::unordered_map<int, Client*> :: const_iterator it = uniqMembers.begin();it!=uniqMembers.end(); it++){
 		if (it->second != client)
 			sendToClient(it->second, msg);
