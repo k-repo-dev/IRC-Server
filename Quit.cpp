@@ -14,12 +14,12 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 	}
 
 	std::string announceQuit = ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " QUIT :" + reason + "\r\n";
+	sendToUnique(client, announceQuit);
 	for (auto it = _channelList.begin(); it != _channelList.end();)
 	{
 		Channel* channel = it->second;
 		if (channel->isMember(client)) // check if the quitting client is in Channel
 		{
-			sendToChannel(channel, announceQuit); // send to everyone where that client was
 			channel->removeMember(client);
 			if (channel->getMembers().empty()) // was it the last member?
 			{
@@ -30,13 +30,11 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 		}
 		it++; //advance the loop in the case the if condition is false
 	}
-
 	// acknowledging the client using QUIT command with an ERROR message
 	std::string errorMsg =
 		"ERROR :Closing link: " + client->getNick()
 		+ "[" + client->getUserName() + "@localhost] ("
 		+ reason + ")\r\n";
 	send(client->getFD(), errorMsg.c_str(), errorMsg.size(), 0);
-
 	removeClient(client->getFD()); //remove client from server
 }

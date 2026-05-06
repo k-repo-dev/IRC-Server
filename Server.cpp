@@ -222,6 +222,25 @@ void Server::sendToChannelOperators(Channel* channel, const std::string& msg){
 	}
 }
 
+void Server::sendToUnique(Client* client, const std::string& msg){
+	std::unordered_map<int, Client*> uniqMembers;
+	for (std::map<std::string, Channel*> :: const_iterator ch = _channelList.begin();
+         ch != _channelList.end(); ++ch)
+	{	
+		if (ch->second->isMember(client))
+		{
+			for (std::unordered_map<int, Client*> :: const_iterator it = ch->second->getMembers().begin();
+			it != ch->second->getMembers().end(); it++){
+				uniqMembers.insert({it->first, it->second});
+			}
+		}
+	}
+	for (std::unordered_map<int, Client*> :: const_iterator it = uniqMembers.begin();it!=uniqMembers.end(); it++){
+		if (it->second != client)
+			sendToClient(it->second, msg);
+	}
+}
+
 Client* Server::getClientByNick(const std::string&nick) //see if a client is in the server
 {
 	for (auto it = _clientList.begin(); it != _clientList.end(); it++)
