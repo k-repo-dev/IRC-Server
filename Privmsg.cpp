@@ -54,7 +54,7 @@ void Server::handlePrivmsg(Client *client, std::vector<std::string> params){
 		else{
 			Client* target = getClientByNick(targets[i]);
 			if (!target){
-				sendToClient(client, std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + targets[i] + " :No such nick\r\n");
+				sendToClient(client, std::string(":") + SERVER_NAME + " 401 " + client->getNick() + " " + targets[i] + " :No such nick\r\n");
 				continue ;
 			}
 			sendToClient(target,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " + target->getNick() + " "+ msg + "\r\n");
