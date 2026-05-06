@@ -57,6 +57,7 @@ public:
 	void				removeInviteOnly(Channel* channel);
 	void				setTopicRestricted(Channel* channel);
 	void				removeTopicRestricted(Channel* channel);
+	void 				removeInvite(Client* client);
 
 };
 
