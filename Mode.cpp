@@ -121,10 +121,7 @@ std::vector<ParsedMode> Server::parseModeString(
 		}
 		else 
 		{
-			if (argIndex < arguments.size())
-				arg = arguments[argIndex++];
-			else
-				continue;
+			continue;
 		}
 		list.push_back({sign, m, arg});
 	}
