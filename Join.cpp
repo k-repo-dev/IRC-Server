@@ -28,7 +28,7 @@ static std::string memberList(Channel* channel){
 }
 
 void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
-	if (chan[0] != '#'){
+	if (chan[0] != '#' && chan[0] != '&'){
 		sendToClient(client, std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + chan + " :No such Channel\r\n");
 		return ;
 	}
