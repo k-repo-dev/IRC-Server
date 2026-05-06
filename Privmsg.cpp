@@ -16,11 +16,6 @@ void Server::privmsgToChannel(Client *client, std::string channel, bool op, std:
 	if (it == _channelList.end())
 		sendToClient(client, std::string(":") + SERVER_NAME + " 403 " + client->getNick() + " " + channel + " :No such channel\r\n");
 	else {
-		if (!it->second->isMember(client))
-		{
-			sendToClient(client, std::string(":") + SERVER_NAME + " 404 " + client->getNick() + " " + it->second->getChannel() + " :Cannot send to channel\r\n");
-			return ;
-		}
 		if (op == true){
 			if (!it->second->isOperator(client))
 				sendToClient(client,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " +  it->second->getChannel() + " " + msg + "\r\n");
@@ -44,12 +39,12 @@ void Server::handlePrivmsg(Client *client, std::vector<std::string> params){
 	}
 	std::string msg = params[1];
 	for (size_t i = 0; i < targets.size(); i++){
-		if (targets[i][0] == '#' ){
+		if (targets[i][0] == '#'|| targets[i][0] == '&' ){
 			privmsgToChannel(client, targets[i], false, msg);
 			continue ;
 		}
 		else if (targets[i][0] == '@'){
-			if(targets[i][1] != '#')
+			if(targets[i][1] != '#' && targets[i][1] != '&')
 				continue ;
 			else{
 				targets[i] = targets[i].substr(1);
