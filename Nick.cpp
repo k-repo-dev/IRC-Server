@@ -2,6 +2,8 @@
 
 void Server::checkRegistered(Client *client)
 {
+	if (client->isRegistered())
+		return;
 	if (client->isPasswordValidated() && !client->getNick().empty() && !client->getUserName().empty())
 	{
 		client->setRegistered(true);
@@ -35,21 +37,18 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 	{
 		sendToClient(client,
 			std::string(":") + SERVER_NAME + " 451 " + nick + " :You have not registered\r\n");
-		std::cout << "not registered\n";
 		return;
 	}
 	if (params.empty())
 	{
 		sendToClient(client,
 			std::string(":") + SERVER_NAME + " 431 " + nick + " :No nickname given\r\n");
-		std::cout << "no nickname\n";
 		return;
 	}
 	if (params.size() > 1 || !isValidNick(params[0]))
 	{
 		sendToClient(client,
 			std::string(":") + SERVER_NAME + " 432 " + nick + " " + params[0] + " :Erroneus nickname\r\n");
-		std::cout << "wrong nickname\n";
 		return;
 	}
 	for (std::map<int, Client*>::iterator it = _clientList.begin(); it != _clientList.end(); it++)
@@ -58,7 +57,6 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 		{
 			sendToClient(client,
 				std::string(":") + SERVER_NAME + " 433 " + nick + " " + params[0] + " :Nickname is already in use\r\n");
-			std::cout << "nick name in use\n";
 			return;
 		}
 	}
