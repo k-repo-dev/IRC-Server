@@ -128,3 +128,8 @@ bool Channel::isInvited(Client* client) const
 {
 	return _inviteList.count(client->getFD()); // is that client in the invite list?
 }
+
+void Channel::removeInvite(Client* client)
+{
+	_inviteList.erase(client->getFD());
+}

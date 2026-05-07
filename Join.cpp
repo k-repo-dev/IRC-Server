@@ -65,6 +65,7 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 		}
 		if (!channel->isMember(client)){
 			channel->addMember(client);
+			channel->removeInvite(client); // invite is one time only
 			sendToChannel(channel, ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " JOIN " + channel->getChannel() + "\r\n");
 			if (!channel->getTopic().empty()){
 				sendToClient(client,
