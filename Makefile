@@ -5,12 +5,25 @@ CXXFLAGS	= -Wall -Wextra -Werror -std=c++20
 RM			= rm -rf
 
 OBJ_DIR		= obj/
+INCLUDES 	= -I incl
 
-SRCS		= main.cpp Server.cpp Client.cpp parse.cpp \
-				Pass.cpp Nick.cpp User.cpp Channel.cpp \
-				Quit.cpp Kick.cpp Ping.cpp Join.cpp \
-				Topic.cpp Part.cpp Invite.cpp Privmsg.cpp \
-				Mode.cpp \
+SRCS =	src/main.cpp \
+		src/Server.cpp \
+		src/Client.cpp \
+		src/Channel.cpp \
+		src/parse.cpp \
+		src/commands/Pass.cpp \
+		src/commands/Nick.cpp \
+		src/commands/User.cpp \
+		src/commands/Quit.cpp \
+		src/commands/Kick.cpp \
+		src/commands/Ping.cpp \
+		src/commands/Join.cpp \
+		src/commands/Topic.cpp \
+		src/commands/Part.cpp \
+		src/commands/Invite.cpp \
+		src/commands/Privmsg.cpp \
+		src/commands/Mode.cpp
 
 
 OBJS		= $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
@@ -29,7 +42,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)%.o: %.cpp
 		@mkdir -p $(dir $@)
-		$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+		$(CXX) $(CXXFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 		@echo "$(YELLOW)Compiling: $<$(RESET)"
 
 .SECONDARY: $(OBJS)

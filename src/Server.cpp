@@ -137,20 +137,12 @@ void Server::handleClient(int fd)
 			line.pop_back();
 		if (!line.empty())
 		{
-			processMessage(_clientList[fd], line);
+			detectCommands(_clientList[fd], line);
 			if (_clientList.find(fd) == _clientList.end())
 				return;
 		}
 	}
 	// partial line stays in data - handled when rest arrives
-}
-
-void Server::processMessage(Client* client, const std::string& line)
-{
-	detectCommands(client, line);
-	// placeholder - just echo the parsed line back for now
-	// std::cout << "fd=" << client->getFD() << " | line: [" << line << "]\n";
-	// sendToClient(client, "echo: " + line + "\r\n");
 }
 
 void Server::sendToClient(Client* client, const std::string& msg)
