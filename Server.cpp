@@ -92,7 +92,7 @@ void Server::acceptClient()
 	setNonBlocking(client_fd);
 
 	struct epoll_event client_ev;
-	client_ev.events = EPOLLIN | EPOLLET;
+	client_ev.events = EPOLLIN; //| EPOLLET;
 	client_ev.data.fd = client_fd;
 	epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, client_fd, &client_ev);
 
@@ -104,22 +104,24 @@ void Server::handleClient(int fd)
 {
 	char buffer[BUFFER_SIZE];
 
-	while (true)
+	int bytes = recv(fd, buffer, BUFFER_SIZE - 1, 0);
+
+	if (bytes == -1 && errno == EAGAIN)
+			return;
+	if (bytes <= 0)
 	{
-		int bytes = recv(fd, buffer, BUFFER_SIZE - 1, 0);
-
-		if (bytes == -1 && errno == EAGAIN)
-			break; // fully drained, wait for next epoll event
-
-		if (bytes <= 0)
-		{
-			removeClient(fd);
-			return ;
-		}
-
-		buffer[bytes] = '\0';
- 		_clientList[fd]->getRecvBuffer() += buffer; // accumulate into per-client buffer
+		removeClient(fd);
+		return ;
 	}
+
+	buffer[bytes] = '\0';
+	if (_clientList[fd]->getRecvBuffer().size() + bytes > MAX_BUFFER)
+	{
+		removeClient(fd);
+		return ;
+	}
+ 	_clientList[fd]->getRecvBuffer() += buffer; // accumulate into per-client buffer
+	
 
 	// do something with the complete buffer
 	std::string& data = _clientList[fd]->getRecvBuffer();
