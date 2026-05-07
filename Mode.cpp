@@ -11,6 +11,11 @@ void Server::handleMode(Client* client, std::vector<std::string>& params)
 
 	std::string targetChannel = params[0];
 
+    if (params[0][0] != '#')
+	{
+    	return;
+	}
+
 	if (_channelList.find(targetChannel) == _channelList.end())
 	{
 		sendToClient(client,
