@@ -39,10 +39,9 @@ static command	getCommands(std::string cmd){
 	while (stream >> arg){
 		if (arg[0] == ':')
 		{
-		// 	needs to handle rest as one param
 		std::string trailing;
 		std::getline(stream, trailing);
-		params.push_back(arg.substr(1) + trailing); // strips the ':'
+		params.push_back(arg.substr(1) + trailing);
 		break;
 		}
 		params.push_back(arg);
@@ -86,7 +85,6 @@ static command	getCommands(std::string cmd){
 			handleMode(client, params);
 			break;
 		default:
-			std::cout << "no command\n";
 			break;
  }
 }

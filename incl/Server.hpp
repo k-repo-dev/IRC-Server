@@ -48,7 +48,6 @@ class Server
 		void removeClient(int fd);
 		void setNonBlocking(int fd);
 		void sendToClient(Client* client, const std::string& msg);
-		void processMessage(Client* client, const std::string& line);
 		void handlePass(Client *client, std::vector<std::string> params);
 		void handleNick(Client *client, std::vector<std::string> params);
 		bool isValidNick(const std::string& nick);
