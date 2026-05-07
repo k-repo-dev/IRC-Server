@@ -35,6 +35,11 @@ void	Channel::setKey(const std::string& key){
 	_key = key;
 }
 
+bool	Channel::hasKey() const
+{
+	return !_key.empty();
+}
+
 void Channel::removeKey()
 {
 	_key = "";
@@ -122,4 +127,9 @@ void Channel::addInvite(Client* client)
 bool Channel::isInvited(Client* client) const
 {
 	return _inviteList.count(client->getFD()); // is that client in the invite list?
+}
+
+void Channel::removeInvite(Client* client)
+{
+	_inviteList.erase(client->getFD());
 }

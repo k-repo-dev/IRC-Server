@@ -19,10 +19,13 @@
 
 extern volatile bool g_running; // shared variable
 #define BUFFER_SIZE 1024
+#define MAX_BUFFER 4096
 #define MAX_EVENT 64
 #define NETWORK_NAME "Swifties Server"
 #define SERVER_NAME "swifties.local"
 #define HOST "localhost"
+
+struct ParsedMode { char sign; char modeLetter; std::string arg; };
 
 class Server
 {
@@ -45,7 +48,6 @@ class Server
 		void removeClient(int fd);
 		void setNonBlocking(int fd);
 		void sendToClient(Client* client, const std::string& msg);
-		void processMessage(Client* client, const std::string& line);
 		void handlePass(Client *client, std::vector<std::string> params);
 		void handleNick(Client *client, std::vector<std::string> params);
 		bool isValidNick(const std::string& nick);
@@ -53,6 +55,7 @@ class Server
 		void checkRegistered(Client *client);
 		void sendToChannel(Channel* channel, const std::string& msg);
 		void sendToChannelOperators(Channel* channel, const std::string& msg);
+		void sendToUnique(Client* client, const std::string& msg);
 		Client* getClientByNick(const std::string&nick);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
@@ -67,7 +70,9 @@ class Server
 		void privmsgToChannel(Client *client, std::string channel, bool op, std::string& msg);
 		void handleInvite(Client *client, std::vector<std::string> params);
 		void handleMode(Client* client, std::vector<std::string>& params);
-		void applyModeChanges(Client* client, Channel* channel, std::string channelName, std::string modeChanges, std::vector<std::string> arguments);
+		std::vector<ParsedMode> parseModeString(Client* client, Channel* channel, const std::string& channelName, const std::string& modeChanges, const std::vector<std::string>& arguments);
+		void applyParsedModes(Client* client, Channel* channel, const std::string& channelName, const std::vector<ParsedMode>& list);
+		void sendChannelModes(Client* client, Channel* channel, const std::string& channelName);
 
 };
 

@@ -32,6 +32,7 @@ public:
 	bool				isOperator(Client* client) const;
 	const std::string&	getKey(void) const;
 	void				setKey(const std::string& key);
+	bool				hasKey() const;
 	void				removeKey();
 	void				setLimit(int limit);
 	void				removeLimit();
@@ -56,6 +57,7 @@ public:
 	void				removeInviteOnly(Channel* channel);
 	void				setTopicRestricted(Channel* channel);
 	void				removeTopicRestricted(Channel* channel);
+	void 				removeInvite(Client* client);
 
 };
 
