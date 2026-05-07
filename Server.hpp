@@ -19,6 +19,7 @@
 
 extern volatile bool g_running; // shared variable
 #define BUFFER_SIZE 1024
+#define MAX_BUFFER 4096
 #define MAX_EVENT 64
 #define NETWORK_NAME "Swifties Server"
 #define SERVER_NAME "swifties.local"
