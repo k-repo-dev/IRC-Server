@@ -92,7 +92,7 @@ void Server::acceptClient()
 	setNonBlocking(client_fd);
 
 	struct epoll_event client_ev;
-	client_ev.events = EPOLLIN; //| EPOLLET;
+	client_ev.events = EPOLLIN;
 	client_ev.data.fd = client_fd;
 	epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, client_fd, &client_ev);
 
