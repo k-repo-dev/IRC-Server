@@ -8,7 +8,8 @@ void Server::checkRegistered(Client *client)
 	{
 		client->setRegistered(true);
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 001 " + client->getNick() + " :Welcome to the " + NETWORK_NAME + " Network, " + client->getNick() + "!" 
+			std::string(":") + SERVER_NAME + " 001 " + client->getNick()
+			+ " :Welcome to the " + NETWORK_NAME + " Network, " + client->getNick() + "!" 
 			+ client->getUserName() + "@" + HOST + "\r\n");
 	}
 }
@@ -63,10 +64,18 @@ void Server::handleNick(Client *client, std::vector<std::string> params)
 	
 	std::string oldNick = nick; // save the old nick or * if not set
 	client->setNick(params[0]);
-	sendToClient(client,
-		":" + oldNick + " NICK " + params[0] + "\r\n");
-	sendToUnique(client,
-		":" + oldNick + " NICK " + params[0] + "\r\n");// success message
-	std::cout << "nickname is " + params[0] + '\n';
+	if (oldNick != "*")
+	{
+		sendToClient(client,
+			":" + oldNick + "!" + client->getUserName() + "@" + HOST + " NICK " + params[0] + "\r\n");
+		sendToUnique(client,
+			":" + oldNick + "!" + client->getUserName() + "@" + HOST + " NICK " + params[0] + "\r\n");// success message
+	}
 	checkRegistered(client);
+	if (oldNick == "*" && client->isRegistered())
+	{
+		sendToClient(client,
+			":" + client->getNick() + "!" + client->getUserName()
+			+ "@" + HOST + " NICK " + client->getNick() + "\r\n");
+	}
 }
