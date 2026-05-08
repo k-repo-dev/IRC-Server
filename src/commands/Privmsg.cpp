@@ -22,7 +22,7 @@ void Server::privmsgToChannel(Client *client, std::string channel, bool op, std:
 			sendToChannelOperators(it->second,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " +  it->second->getChannel() + " " + msg + "\r\n");
 		}
 		else
-			sendToChannel(it->second,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " +  it->second->getChannel() + " " + msg + "\r\n");
+			sendToChannelExcept(it->second,  ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " PRIVMSG " +  it->second->getChannel() + " " + msg + "\r\n", client);
 	}
 }
 
