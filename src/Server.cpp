@@ -185,8 +185,7 @@ void Server::flushClient(int fd)
 
 void Server::setNonBlocking(int fd)
 {
-	//int flags = fcntl(fd, F_GETFL, 0); // read current flags
-	fcntl(fd, F_SETFL, /*flags |*/ O_NONBLOCK); // write them back with O_NONBLOCK added
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 }
 
 void Server::removeClient(int fd)
