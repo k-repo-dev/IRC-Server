@@ -51,6 +51,8 @@ void Server::handleKick(Client *client, std::vector<std::string> params)
 		const std::unordered_map<int, Client*>& members = channel->getMembers();
 		for (auto it = members.begin(); it != members.end(); it++)
 			sendToClient(it->second, kickMess);
+		if (channel->isOperator(target))
+			channel->removeOperator(target);
 		channel->removeMember(target);
 		if (channel->getMembers().empty())
 		{
