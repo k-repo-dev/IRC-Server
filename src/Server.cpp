@@ -189,18 +189,6 @@ void Server::setNonBlocking(int fd)
 	fcntl(fd, F_SETFL, /*flags |*/ O_NONBLOCK); // write them back with O_NONBLOCK added
 }
 
-void Server::removeClient(int fd)
-{
-	std::map<int, Client*>::iterator it = _clientList.find(fd);
-	if (it != _clientList.end())
-	{
-		delete it->second;
-		_clientList.erase(it);
-	}
-	epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
-	close(fd);
-	std::cout << "Client fd=" << fd << " disconnected\n"; 
-}
 
 void Server::sendToChannel(Channel* channel, const std::string& msg){
 	for (std::unordered_map<int, Client*> :: const_iterator it = channel->getMembers().begin();
