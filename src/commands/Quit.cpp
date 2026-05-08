@@ -12,24 +12,7 @@ void Server::handleQuit(Client* client, std::vector<std::string>& params)
 			joined += " " + params[i];
 		reason += joined;
 	}
-
-	std::string announceQuit = ":" + client->getNick() + "!" + client->getUserName() + "@" + HOST + " QUIT :" + reason + "\r\n";
-	sendToUnique(client, announceQuit);
-	for (auto it = _channelList.begin(); it != _channelList.end();)
-	{
-		Channel* channel = it->second;
-		if (channel->isMember(client)) // check if the quitting client is in Channel
-		{
-			channel->removeMember(client);
-			if (channel->getMembers().empty()) // was it the last member?
-			{
-				delete channel;
-				it = _channelList.erase(it); // point to next valid position and erase the channel from map
-				continue; // ignore the ++it after erase, because "it" is already pointing to next
-			}
-		}
-		it++; //advance the loop in the case the if condition is false
-	}
+	cleanupClient(client, reason);
 	// acknowledging the client using QUIT command with an ERROR message
 	std::string errorMsg =
 		"ERROR :Closing link: " + client->getNick()

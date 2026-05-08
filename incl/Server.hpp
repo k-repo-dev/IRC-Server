@@ -45,6 +45,7 @@ class Server
 		void acceptClient();
 		void handleClient(int fd);
 		void flushClient(int fd);
+		void cleanupClient(Client* client, const std::string& reason);
 		void removeClient(int fd);
 		void setNonBlocking(int fd);
 		void sendToClient(Client* client, const std::string& msg);
