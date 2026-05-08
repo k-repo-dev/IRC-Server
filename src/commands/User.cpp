@@ -2,6 +2,15 @@
 
 void Server::handleUser(Client* client, std::vector<std::string>& params)
 {
+	std::string nick = client->getNick().empty() ? "*" : client->getNick();
+
+	if (!client->isPasswordValidated())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + nick + " :You have not registered\r\n");
+		return;
+	}
+
 	// ERR_ALREADYREGISTERED (462)
 	// if USER is sent after registration is complete, reject it
 	if (client->isRegistered())
