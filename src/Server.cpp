@@ -235,6 +235,16 @@ void Server::sendToUnique(Client* client, const std::string& msg){
 	}
 }
 
+void Server::sendToChannelExcept(Channel* channel, const std::string& msg, Client* sender)
+{
+	for (std::unordered_map<int, Client*>::const_iterator it = channel->getMembers().begin();
+		it != channel->getMembers().end(); it++)
+	{
+		if (it->second != sender)
+			sendToClient(it->second, msg);
+	}
+}
+
 Client* Server::getClientByNick(const std::string&nick) //see if a client is in the server
 {
 	for (auto it = _clientList.begin(); it != _clientList.end(); it++)

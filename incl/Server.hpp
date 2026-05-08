@@ -56,6 +56,7 @@ class Server
 		void sendToChannel(Channel* channel, const std::string& msg);
 		void sendToChannelOperators(Channel* channel, const std::string& msg);
 		void sendToUnique(Client* client, const std::string& msg);
+		void sendToChannelExcept(Channel* channel, const std::string& msg, Client* sender);
 		Client* getClientByNick(const std::string&nick);
 
 		void handleUser(Client* client, std::vector<std::string>& params);
