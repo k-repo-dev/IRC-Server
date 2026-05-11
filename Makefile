@@ -12,6 +12,7 @@ SRCS =	src/main.cpp \
 		src/Client.cpp \
 		src/Channel.cpp \
 		src/parse.cpp \
+		src/Cleanup.cpp \
 		src/commands/Pass.cpp \
 		src/commands/Nick.cpp \
 		src/commands/User.cpp \

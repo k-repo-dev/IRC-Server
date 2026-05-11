@@ -185,22 +185,9 @@ void Server::flushClient(int fd)
 
 void Server::setNonBlocking(int fd)
 {
-	int flags = fcntl(fd, F_GETFL, 0); // read current flags
-	fcntl(fd, F_SETFL, flags | O_NONBLOCK); // write them back with O_NONBLOCK added
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 }
 
-void Server::removeClient(int fd)
-{
-	std::map<int, Client*>::iterator it = _clientList.find(fd);
-	if (it != _clientList.end())
-	{
-		delete it->second;
-		_clientList.erase(it);
-	}
-	epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
-	close(fd);
-	std::cout << "Client fd=" << fd << " disconnected\n"; 
-}
 
 void Server::sendToChannel(Channel* channel, const std::string& msg){
 	for (std::unordered_map<int, Client*> :: const_iterator it = channel->getMembers().begin();
@@ -231,6 +218,16 @@ void Server::sendToUnique(Client* client, const std::string& msg){
 	}
 	for (std::unordered_map<int, Client*> :: const_iterator it = uniqMembers.begin();it!=uniqMembers.end(); it++){
 		if (it->second != client)
+			sendToClient(it->second, msg);
+	}
+}
+
+void Server::sendToChannelExcept(Channel* channel, const std::string& msg, Client* sender)
+{
+	for (std::unordered_map<int, Client*>::const_iterator it = channel->getMembers().begin();
+		it != channel->getMembers().end(); it++)
+	{
+		if (it->second != sender)
 			sendToClient(it->second, msg);
 	}
 }
