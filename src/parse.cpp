@@ -7,6 +7,7 @@ static command	getCommands(std::string cmd){
 		return USER;
 	if (cmd == "PASS")
 		return PASS;
+	// ADD REGISTER CHECK
 	if (cmd == "QUIT")
 		return QUIT;
 	if (cmd == "JOIN")
