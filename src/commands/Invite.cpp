@@ -2,10 +2,16 @@
 
 void Server::handleInvite(Client *client, std::vector<std::string> params)
 {
+	if (!client->isRegistered())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + client->getNick() + " :You have not registered\r\n");
+		return;
+	}
 	if (params.size() < 2)
 	{
 		sendToClient(client,
-			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " INVITE:Not enough parameters\r\n");
+			std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " INVITE :Not enough parameters\r\n");
 		return;
 	}
 
