@@ -2,6 +2,12 @@
 
 void Server::handlePing(Client* client, std::vector<std::string>& params)
 {
+	if (!client->isRegistered())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + client->getNick() + " :You have not registered\r\n");
+		return;
+	}
 	// ERR_NEEDMOREPARAMS (461) - no token at all
 	if (params.empty())
 	{

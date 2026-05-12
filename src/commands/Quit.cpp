@@ -2,6 +2,12 @@
 
 void Server::handleQuit(Client* client, std::vector<std::string>& params)
 {
+	if (!client->isRegistered())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + client->getNick() + " :You have not registered\r\n");
+		return;
+	}
 	// a reason is always given, even if QUIT is called without params
 	// if empty, then reason is just "Quit: "
 	std::string reason = "Quit: ";
