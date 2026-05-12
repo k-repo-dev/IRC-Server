@@ -28,7 +28,13 @@ void Server::privmsgToChannel(Client *client, std::string channel, bool op, std:
 
 void Server::handlePrivmsg(Client *client, std::vector<std::string> params){
 
-		if (params.empty()){
+	if (!client->isRegistered())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + client->getNick() + " :You have not registered\r\n");
+		return;
+	}
+	if (params.empty()){
 		sendToClient(client, std::string(":") + SERVER_NAME + " 411 " + client->getNick() + " :No recipient given (PRIVMSG)\r\n");
 		return ;
 	}
