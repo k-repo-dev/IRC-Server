@@ -81,6 +81,12 @@ void	Server::joinChannel(Client* client, std::string& chan, std::string& key){
 	}
 }
 void	Server::handleJoin(Client* client, std::vector<std::string>& params){
+	if (!client->isRegistered())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + client->getNick() + " :You have not registered\r\n");
+		return;
+	}
 	if (params.empty()){
 		sendToClient(client, std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " JOIN: Not enough parameters\r\n");
 		return ;
