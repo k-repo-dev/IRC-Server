@@ -13,6 +13,12 @@ static std::vector<std::string> separateParams(const std::string& par){
 }
 
 void Server::handlePart(Client* client, std::vector<std::string>& params){
+	if (!client->isRegistered())
+	{
+		sendToClient(client,
+			std::string(":") + SERVER_NAME + " 451 " + client->getNick() + " :You have not registered\r\n");
+		return;
+	}
 	if (params.empty()){
 		sendToClient(client, std::string(":") + SERVER_NAME + " 461 " + client->getNick() + " PART: Not enough parameters\r\n");
 		return ;
