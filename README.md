@@ -1,6 +1,6 @@
 # IRC-Server
 
-An IRC server built in C++ as a group project at Hive Helsinki. Made by @k-repo-dev, @jkorvenpaa and @nmascaro436 .
+An IRC server built in C++ as a group project at Hive Helsinki. Made by [@k-repo-dev](https://github.com/k-repo-dev), [@jkorvenpaa](https://github.com/jkorvenpaa) and [@nmascaro436](https://github.com/nmascaro436).
 
 The goal of this project was to recreate the core behavior of a real IRC server using low-level network programming and non-blocking I/O. The server communicates through TCP/IP and is capable of handling multiple clients simultaneously without blocking or using threads/processes for each connection.
 
