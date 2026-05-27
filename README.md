@@ -6,8 +6,6 @@ The goal of this project was to recreate the core behavior of a real IRC server 
 
 Our implementation supports user authentication, nickname and username registration, channel management, private messaging, operator privileges, and several channel modes. We used `epoll` to efficiently manage all socket events and handle incoming/outgoing communication between connected clients.
 
-This IRC server was developed collaboratively by a team of 3 students at Hive Helsinki: @username1, @username2, and @yourusername.
-
 ---
 
 ## Features
